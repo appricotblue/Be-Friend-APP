@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {height, width} from '../Theme/Constants';
 import ProfilePNG from '../assets/png/ProfilePNG.png';
@@ -6,13 +6,17 @@ import FunzoneSVG from '../assets/svg/FunzoneSVG';
 import PointsSVG from '../assets/svg/PointsSVG';
 import SearchSVG from '../assets/svg/SearchSVG';
 
-const MainHeader = () => {
+const MainHeader = ({onProfilePress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
-        <Image source={ProfilePNG} style={styles.imageContainer} />
+        <TouchableOpacity>
+          <Image source={ProfilePNG} style={styles.imageContainer} />
+        </TouchableOpacity>
+
         <FunzoneSVG height={60} width={100} />
       </View>
+
       <View style={styles.row2}>
         <View style={styles.pointsContainer}>
           <PointsSVG />

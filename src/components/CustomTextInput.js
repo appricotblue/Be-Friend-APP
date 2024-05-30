@@ -29,16 +29,18 @@ const styles = StyleSheet.create({
     width: width * 0.9,
     borderWidth: 1,
     borderColor: 'grey',
-    borderRadius: 15,
+    borderRadius: 10,
     paddingHorizontal: 10,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#271926',
+    // marginVertical: 20,
   },
   inputStyle: {
     width: width * 0.8,
     height: height * 0.05,
     // backgroundColor: 'pink',
-    color: 'black',
+    color: 'white',
   },
 });
 

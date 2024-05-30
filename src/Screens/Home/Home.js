@@ -49,6 +49,11 @@ const Home = ({navigation: {navigate}}) => {
   const OnHomePress = () => {
     navigate('cart');
   };
+  const onProfilePress = () => {
+    console.log('----------------');
+    navigate('profile');
+  };
+
   // const [currentIndex, setCurrentIndex] = useState(0);
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -67,26 +72,26 @@ const Home = ({navigation: {navigate}}) => {
   //   return () => clearInterval(intervalId);
   // }, []);
 
-  const [currentIndex, setCurrentIndex] = useState(items.length - 1);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex(prevIndex => {
-        const nextIndex = prevIndex - 1;
-        if (nextIndex < 0) {
-          flatListRef.current.scrollToIndex({
-            index: items?.length - 1,
-            animated: true,
-          });
-          return items?.length - 1;
-        } else {
-          flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
-          return nextIndex;
-        }
-      });
-    }, 800);
+  // const [currentIndex, setCurrentIndex] = useState(items.length - 1);
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     setCurrentIndex(prevIndex => {
+  //       const nextIndex = prevIndex - 1;
+  //       if (nextIndex < 0) {
+  //         flatListRef.current.scrollToIndex({
+  //           index: items?.length - 1,
+  //           animated: true,
+  //         });
+  //         return items?.length - 1;
+  //       } else {
+  //         flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
+  //         return nextIndex;
+  //       }
+  //     });
+  //   }, 800);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   const renderItem = ({item, index}) => {
     return (
@@ -112,7 +117,7 @@ const Home = ({navigation: {navigate}}) => {
           <Text>{t('home')}</Text>
           <Text>{t('welcome')}</Text>
         </TouchableOpacity> */}
-        <FlatList
+        {/* <FlatList
           ref={flatListRef}
           data={items}
           renderItem={(item, index) => renderItem(item, index)}
@@ -124,9 +129,11 @@ const Home = ({navigation: {navigate}}) => {
             offset: 70 * index,
             index,
           })}
-        />
+        /> */}
 
-        <TouchableOpacity style={styles.hostButton}>
+        <TouchableOpacity
+          style={styles.hostButton}
+          onPress={() => onProfilePress()}>
           <AddSVG marginHorizontal={5} />
           <Text style={styles.hostText}>{t('hostacall')}</Text>
         </TouchableOpacity>
