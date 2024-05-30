@@ -6,6 +6,9 @@ import HomeFSVG from '../assets/svg/HomeFSVG';
 import HomeTSVG from '../assets/svg/HomeTSVG';
 import ReelsTSVG from '../assets/svg/ReelsTSVG';
 import ReelsFSVG from '../assets/svg/ReelsFSVG';
+import OneVsOneFSVG from '../assets/svg/OneVsOneFSVG';
+import OneVsOneTSVG from '../assets/svg/OneVsOneTSVG';
+
 import Reels from '../Screens/Reels/ReelScreen';
 
 const Tab = createBottomTabNavigator();
@@ -18,10 +21,10 @@ function TabNavigator() {
         screenOptions={{
           headerTitleAlign: 'center',
           tabBarActiveTintColor: Colors.primary,
-          tabBarActiveBackgroundColor: Colors.white,
-          tabBarInactiveBackgroundColor: Colors.white,
+          tabBarActiveBackgroundColor: '#10000E',
+          tabBarInactiveBackgroundColor: '#10000E',
           tabBarLabel: '',
-          tabBarStyle: {paddingVertical: 12},
+          // tabBarStyle: {paddingVertical: 12},
         }}>
         <Tab.Screen
           name="Home"
@@ -31,9 +34,23 @@ function TabNavigator() {
             headerShown: false,
             tabBarIcon: ({color, focused}) => {
               if (focused) {
-                return <HomeTSVG height={40} width={40} color={color} />;
+                return (
+                  <OneVsOneTSVG
+                    height={40}
+                    width={40}
+                    color={color}
+                    marginTop={10}
+                  />
+                );
               }
-              return <HomeFSVG height={40} width={40} color={color} />;
+              return (
+                <OneVsOneFSVG
+                  height={40}
+                  width={40}
+                  color={color}
+                  marginTop={10}
+                />
+              );
             },
             unmountOnBlur: true,
             tabBarHideOnKeyboard: true,
@@ -47,9 +64,18 @@ function TabNavigator() {
             headerShown: false,
             tabBarIcon: ({color, focused}) => {
               if (focused) {
-                return <ReelsTSVG height={40} width={40} color={color} />;
+                return (
+                  <HomeTSVG
+                    height={40}
+                    width={40}
+                    color={color}
+                    marginTop={10}
+                  />
+                );
               }
-              return <ReelsFSVG height={40} width={40} color={color} />;
+              return (
+                <HomeFSVG height={40} width={40} color={color} marginTop={10} />
+              );
             },
 
             unmountOnBlur: true,
