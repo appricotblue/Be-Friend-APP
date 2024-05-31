@@ -67,15 +67,15 @@ const style = StyleSheet.create({
         width: '100%',
         minHeight: windowHeight / 28,
         borderWidth: 1,
-        borderColor: 'white',
+        borderColor: '#271926',
         alignSelf: 'center',
         flexDirection: 'column',
-
+        backgroundColor: '#271926',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.5,
         shadowRadius: 2,
         elevation: 6,
-        borderRadius: 26,
+        borderRadius: 10,
     },
     manageAddressItem: {
         width: '50%',

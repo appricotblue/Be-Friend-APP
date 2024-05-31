@@ -42,7 +42,8 @@ const ProfileScreen = ({navigation}) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Place</Text>
-        <CustomTextInput />
+        <CustomTextInput 
+        />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Gender</Text>
