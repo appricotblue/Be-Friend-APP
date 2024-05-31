@@ -1,6 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import LoginScreen from '../Screens/Login/LoginScreen';
+import WelcomeScreen from '../Screens/WelcomeScreen/WelcomeScreen';
 import SplashScreen from '../Screens/Splash/SplashScreen';
 import HomeStack from './HomeStack';
 
@@ -25,6 +26,11 @@ const Authstack = () => {
         name="LoginScreen"
         options={{headerShown: false}}
         component={LoginScreen}
+      />
+      <Stack.Screen
+        name="WelcomeScreen"
+        options={{ headerShown: false }}
+        component={WelcomeScreen}
       />
 
       <Stack.Screen

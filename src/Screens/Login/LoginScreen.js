@@ -13,7 +13,7 @@ const LoginScreen = ({navigation: {navigate}}) => {
   const [email, setEmail] = useState('');
 
   const OnLoginPress = () => {
-    navigate('home');
+    navigate('WelcomeScreen');
   };
   return (
     <View style={styles.container}>
