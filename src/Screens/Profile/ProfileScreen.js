@@ -49,7 +49,7 @@ const ProfileScreen = ({navigation}) => {
         <View style={styles.genderContainer}>
           {gender.map((item, key) => {
             return (
-              <View style={styles.row1}>
+              <View style={styles.row1} key={item.id}>
                 <TouchableOpacity
                   style={styles.radioBtnOuter}
                   onPress={() => setSelected(item.id)}>
