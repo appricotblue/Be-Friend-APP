@@ -32,6 +32,7 @@ const HorizontalFilter = ({data}) => {
         renderItem={(item, index) => renderItem(item, index)}
         keyExtractor={item => item.id}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
