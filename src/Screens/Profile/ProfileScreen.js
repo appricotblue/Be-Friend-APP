@@ -15,6 +15,7 @@ const ProfileScreen = ({navigation}) => {
     {id: 3, name: 'Other'},
   ];
   const [selected, setSelected] = useState('');
+
   return (
     <View style={styles.container}>
       <View style={styles.subHeader}>
@@ -34,15 +35,15 @@ const ProfileScreen = ({navigation}) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Username</Text>
-        <CustomTextInput />
+        <CustomTextInput placeholder={'Vishnu@123'} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Date of Birth</Text>
-        <CustomTextInput />
+        <CustomTextInput placeholder={'07-10-1995'} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Place</Text>
-        <CustomTextInput />
+        <CustomTextInput placeholder={'Thrissur'} />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Gender</Text>

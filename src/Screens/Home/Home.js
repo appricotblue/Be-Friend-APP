@@ -17,8 +17,10 @@ import ShreyaPNG from '../../assets/png/ShreyaPNG.png';
 import NandhuPNG from '../../assets/png/NandhuPNG.png';
 import AjayPNG from '../../assets/png/AjayPNG.png';
 import AnupamaPNG from '../../assets/png/AnupamaPNG.png';
+import PrivatePNG from '../../assets/png/PrivatePNG.png';
 
 import PrivateSVG from '../../assets/svg/PrivateSVG';
+
 import AddSVG from '../../assets/svg/AddSVG';
 
 import {height, width} from '../../Theme/Constants';
@@ -56,28 +58,12 @@ const Home = ({navigation: {navigate}}) => {
     navigate('cart');
   };
   const onProfilePress = () => {
-    console.log('----------------');
     navigate('profile');
   };
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCurrentIndex(prevIndex => {
-  //       const nextIndex = prevIndex + 1;
-  //       if (nextIndex >= items.length) {
-  //         flatListRef.current.scrollToOffset({offset: 0, animated: true});
-  //         return 0;
-  //       } else {
-  //         flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
-  //         return nextIndex;
-  //       }
-  //     });
-  //   }, 1000);
-
-  //   return () => clearInterval(intervalId);
-  // }, []);
-
   const [currentIndex, setCurrentIndex] = useState(items.length - 1);
+  const numColumns = 2;
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentIndex(prevIndex => {
@@ -107,21 +93,6 @@ const Home = ({navigation: {navigate}}) => {
               source={item.img}
               style={{height: height * 0.13, width: width * 0.24}}></Image>
           </TouchableOpacity>
-          {/* <TouchableOpacity style={styles.FlatlistContainer}>
-            <Image
-              source={item.img}
-              style={{height: height * 0.13, width: width * 0.24}}></Image>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.FlatlistContainer}>
-            <Image
-              source={item.img}
-              style={{height: height * 0.13, width: width * 0.24}}></Image>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.FlatlistContainer}>
-            <Image
-              source={item.img}
-              style={{height: height * 0.13, width: width * 0.24}}></Image>
-          </TouchableOpacity> */}
         </View>
       </Animatable.View>
     );
@@ -130,8 +101,10 @@ const Home = ({navigation: {navigate}}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={HomeBgPNG} style={styles.bgStyle}>
-        <MainHeader />
-        <PrivateSVG height={height * 0.1} width={width * 1} />
+        <MainHeader onProfilePress={() => onProfilePress()} />
+        <View>
+          <Image source={PrivatePNG} style={styles.svgStle}></Image>
+        </View>
         <HorizontalFilter data={Data} />
 
         {/* <TouchableOpacity>
@@ -151,12 +124,9 @@ const Home = ({navigation: {navigate}}) => {
             offset: 70 * index,
             index,
           })}
-          // numColumns={3}
         />
 
-        <TouchableOpacity
-          style={styles.hostButton}
-          onPress={() => onProfilePress()}>
+        <TouchableOpacity style={styles.hostButton}>
           <AddSVG marginHorizontal={5} />
           <Text style={styles.hostText}>{t('hostacall')}</Text>
         </TouchableOpacity>
@@ -208,6 +178,10 @@ const styles = StyleSheet.create({
     width: width * 0.92,
     // backgroundColor: 'pink',
     marginHorizontal: 13,
+  },
+  svgStle: {
+    height: height * 0.09,
+    width: width * 1,
   },
 });
 

@@ -14,7 +14,9 @@ const ChatScreen = ({navigation}) => {
           <Text style={styles.editProfileText}>Chats</Text>
         </View>
       </View>
-      <Text style={{alignSelf: 'center'}}>Work in progress</Text>
+      <Text style={{alignSelf: 'center', marginVertical: 150}}>
+        Work in progress
+      </Text>
     </View>
   );
 };

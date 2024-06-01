@@ -10,7 +10,9 @@ const MainHeader = ({onProfilePress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={onProfilePress}
+          style={styles.imageContainer}>
           <Image source={ProfilePNG} style={styles.imageContainer} />
         </TouchableOpacity>
 

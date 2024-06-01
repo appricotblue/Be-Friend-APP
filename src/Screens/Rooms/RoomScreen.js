@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Image} from 'react-native';
 import React from 'react';
 import MainHeader from '../../components/MainHeader';
 import GroupRoomSVG from '../../assets/svg/GroupRoomSVG';
@@ -8,6 +8,7 @@ import FilterPNG1 from '../../assets/png/FilterPNG1.png';
 import FilterPNG2 from '../../assets/png/FilterPNG2.png';
 import FilterPNG3 from '../../assets/png/FilterPNG3.png';
 import IconPNG from '../../assets/png/IconPNG.png';
+import GroupPNG from '../../assets/png/GroupPNG.png';
 
 import RoomItemCard from '../../components/RoomItemCard';
 
@@ -29,10 +30,14 @@ const data = [
 ];
 
 const RoomScreen = ({navigation: {navigate}}) => {
+  const onProfilePress = () => {
+    navigate('profile');
+  };
+
   return (
     <View style={styles.container}>
-      <MainHeader />
-      <GroupRoomSVG height={height * 0.1} width={width * 1} />
+      <MainHeader onProfilePress={() => onProfilePress()} />
+      <Image source={GroupPNG} style={styles.svgStle}></Image>
       <RoomHorizontalFilter data={Data} />
       <RoomItemCard data={data} />
     </View>
@@ -43,6 +48,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#10000E',
+  },
+  svgStle: {
+    height: height * 0.09,
+    width: width * 1,
   },
 });
 
