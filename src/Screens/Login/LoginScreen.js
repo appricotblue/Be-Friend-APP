@@ -73,7 +73,7 @@ const LoginScreen = props => {
     const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email format
 
     if (email === '') {
-      changecheckEmail('Please enter username'); // Set error message
+      changecheckEmail('Enter  Mobile no'); // Set error message
       // alert('Please enter Email id'); // Set error message
     }
 
@@ -84,6 +84,7 @@ const LoginScreen = props => {
 
     else {
       navigation.replace('OtpScreen');
+      // navigation.replace('WelcomeScreen');
       // local.storeLogin(true);
     }
   };
@@ -141,6 +142,7 @@ const LoginScreen = props => {
           <CountryPicker title="Country" onSelectCountry={handleSelectCountry} />
           <TextInputBox
             value={email}
+            isNumber={true}
             errorText={checkEmail}
             onChangeText={text => {
               changeemail(text);
@@ -154,9 +156,9 @@ const LoginScreen = props => {
         </View>
 
 
-        {selectedCountryId && (
+        {/* {selectedCountryId && (
           <Text>Selected Country ID: {selectedCountryId}</Text>
-        )}
+        )} */}
         <View style={{ width: '80%', marginTop: 20 }}>
           <Image
             key={1}

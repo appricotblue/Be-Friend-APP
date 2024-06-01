@@ -109,6 +109,7 @@ const Home = ({navigation: {navigate}}) => {
     <SafeAreaView style={styles.container}>
       <ImageBackground source={HomeBgPNG} style={styles.bgStyle}>
         <MainHeader />
+
         <PrivateSVG height={height * 0.1} width={width * 1} />
         <HorizontalFilter data={Data} />
 

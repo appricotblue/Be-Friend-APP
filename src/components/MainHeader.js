@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import React from 'react';
 import {height, width} from '../Theme/Constants';
 import ProfilePNG from '../assets/png/ProfilePNG.png';
@@ -10,7 +10,7 @@ const MainHeader = ({onProfilePress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => Alert.alert('hi')}>
           <Image source={ProfilePNG} style={styles.imageContainer} />
         </TouchableOpacity>
 

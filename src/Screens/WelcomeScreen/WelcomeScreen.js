@@ -130,7 +130,7 @@ const WelcomeScreen = ({ navigation }) => {
                             width={width / 3}
                         />
                             <TouchableOpacity
-                            onPress={() => navigation.replace('LoginScreen')}
+                            onPress={() => navigation.replace('home')}
                                 style={styles.skipBtn}>
                             <Text style={styles.skipTxt}>Skip</Text>
                         </TouchableOpacity>

@@ -111,7 +111,7 @@ const OtpScreen = props => {
                 {/* <ImageBackground source={FunZone} resizeMode="cover" style={styles.image}> */}
                 <View style={{ width: width - 60, marginTop: 30, marginBottom: 40, }}>
                     <Text style={styles.TileTxt}>{"Enter the code received "}</Text>
-                    <Text style={styles.subTileTxt}>{"The code has been sent to +91 94633 33663"}</Text>
+                    <Text style={styles.subTileTxt}>The code has been sent to  <Text style={{ color: '#A811DA' }}>+91 94633 33663</Text></Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', width: '80%' }}>
@@ -147,8 +147,9 @@ const OtpScreen = props => {
                     width={width / 1.4}
                     texttitle={'white'}
                 />
-                <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%' }}>
-                    <Text style={styles.subTxt}>Didn't get any code? <Text style={styles.subTxt}>Try Again</Text></Text>
+                <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%', flexDirection: 'row', }}>
+                    <Text style={styles.subTxt}>Didn't get any code? <TouchableOpacity><Text style={styles.subtryTxt}>Try Again</Text></TouchableOpacity></Text>
+
 
 
                 </View>
@@ -202,6 +203,16 @@ const styles = StyleSheet.create({
         color: 'white',
         textAlign: 'center',
         width: width,
+        fontFamily: 'Jost',
+        fontWeight: '300',
+
+    },
+    subtryTxt: {
+        fontSize: 14,
+        color: '#A811DA',
+
+        textDecorationLine: 'underline',
+        // width: width,
         fontFamily: 'Jost',
         fontWeight: '300',
 

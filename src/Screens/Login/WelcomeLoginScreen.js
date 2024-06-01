@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         fontSize: 24,
         marginBottom: 5,
-        fontFamily: 'Jost-Regular',
+        fontFamily: 'Livvic-BoldItalic',
     },
     subTxt: {
         fontSize: 12,

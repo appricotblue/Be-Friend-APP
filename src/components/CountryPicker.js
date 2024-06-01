@@ -7,11 +7,12 @@ const CountryPicker = (props) => {
     const [selectedCountryCode, setSelectedCountryCode] = useState(null);
 
     const countries = [
-        { id: 1, name: "United States", code: "US" },
-        { id: 2, name: "Canada", code: "CA" },
-        { id: 3, name: "United Kingdom", code: "UK" },
-        { id: 4, name: "Australia", code: "AU" },
-        { id: 5, name: "Germany", code: "DE" },
+        { id: 1, name: "India", code: "+91" },
+        { id: 2, name: "Canada", code: "+786" },
+        { id: 3, name: "United Kingdom", code: "+67" },
+        { id: 4, name: "Australia", code: "+76" },
+        { id: 5, name: "Germany", code: "+90" },
+        { id: 6, name: "United States", code: "+1" },
     ];
 
     const toggleModal = () => {
