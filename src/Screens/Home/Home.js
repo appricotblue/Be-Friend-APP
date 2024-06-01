@@ -8,10 +8,16 @@ import {
   ImageBackground,
   FlatList,
   View,
+  Image,
 } from 'react-native';
 import {useLanguage} from '../../LanguageContext';
 import MainHeader from '../../components/MainHeader';
 import HomeBgPNG from '../../assets/png/HomeBgPNG.png';
+import ShreyaPNG from '../../assets/png/ShreyaPNG.png';
+import NandhuPNG from '../../assets/png/NandhuPNG.png';
+import AjayPNG from '../../assets/png/AjayPNG.png';
+import AnupamaPNG from '../../assets/png/AnupamaPNG.png';
+
 import PrivateSVG from '../../assets/svg/PrivateSVG';
 import AddSVG from '../../assets/svg/AddSVG';
 
@@ -28,18 +34,18 @@ const Data = [
   {id: 6, title: 'Drama'},
 ];
 const items = [
-  {id: 1, title: 'Romance'},
-  {id: 2, title: 'Broken'},
-  {id: 3, title: 'Friendship'},
-  {id: 4, title: 'Malayalam'},
-  {id: 5, title: 'Music'},
-  {id: 6, title: 'Drama'},
-  {id: 7, title: 'Romance'},
-  {id: 8, title: 'Broken'},
-  {id: 9, title: 'Friendship'},
-  {id: 10, title: 'Malayalam'},
-  {id: 11, title: 'Music'},
-  {id: 12, title: 'Drama'},
+  {id: 1, title: 'Romance', img: ShreyaPNG},
+  {id: 2, title: 'Broken', img: NandhuPNG},
+  {id: 3, title: 'Friendship', img: AjayPNG},
+  {id: 4, title: 'Malayalam', img: AnupamaPNG},
+  {id: 5, title: 'Music', img: ShreyaPNG},
+  {id: 6, title: 'Drama', img: NandhuPNG},
+  {id: 7, title: 'Romance', img: AnupamaPNG},
+  {id: 8, title: 'Broken', img: ShreyaPNG},
+  {id: 9, title: 'Friendship', img: NandhuPNG},
+  {id: 10, title: 'Malayalam', img: AjayPNG},
+  {id: 11, title: 'Music', img: AnupamaPNG},
+  {id: 12, title: 'Drama', img: ShreyaPNG},
 ];
 
 const Home = ({navigation: {navigate}}) => {
@@ -54,7 +60,6 @@ const Home = ({navigation: {navigate}}) => {
     navigate('profile');
   };
 
-  // const [currentIndex, setCurrentIndex] = useState(0);
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
   //     setCurrentIndex(prevIndex => {
@@ -72,34 +77,51 @@ const Home = ({navigation: {navigate}}) => {
   //   return () => clearInterval(intervalId);
   // }, []);
 
-  // const [currentIndex, setCurrentIndex] = useState(items.length - 1);
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     setCurrentIndex(prevIndex => {
-  //       const nextIndex = prevIndex - 1;
-  //       if (nextIndex < 0) {
-  //         flatListRef.current.scrollToIndex({
-  //           index: items?.length - 1,
-  //           animated: true,
-  //         });
-  //         return items?.length - 1;
-  //       } else {
-  //         flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
-  //         return nextIndex;
-  //       }
-  //     });
-  //   }, 800);
+  const [currentIndex, setCurrentIndex] = useState(items.length - 1);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex(prevIndex => {
+        const nextIndex = prevIndex - 1;
+        if (nextIndex < 0) {
+          flatListRef.current.scrollToIndex({
+            index: items?.length - 1,
+            animated: true,
+          });
+          return items?.length - 1;
+        } else {
+          flatListRef.current.scrollToIndex({index: nextIndex, animated: true});
+          return nextIndex;
+        }
+      });
+    }, 800);
 
-  //   return () => clearInterval(intervalId);
-  // }, []);
+    return () => clearInterval(intervalId);
+  }, []);
 
   const renderItem = ({item, index}) => {
     return (
       <Animatable.View animation="zoomIn" duration={1000} delay={300}>
-        <View>
+        <View style={styles.flowContainer}>
           <TouchableOpacity style={styles.FlatlistContainer}>
-            <Text>{item.title}</Text>
+            <Image
+              source={item.img}
+              style={{height: height * 0.13, width: width * 0.24}}></Image>
           </TouchableOpacity>
+          {/* <TouchableOpacity style={styles.FlatlistContainer}>
+            <Image
+              source={item.img}
+              style={{height: height * 0.13, width: width * 0.24}}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.FlatlistContainer}>
+            <Image
+              source={item.img}
+              style={{height: height * 0.13, width: width * 0.24}}></Image>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.FlatlistContainer}>
+            <Image
+              source={item.img}
+              style={{height: height * 0.13, width: width * 0.24}}></Image>
+          </TouchableOpacity> */}
         </View>
       </Animatable.View>
     );
@@ -117,7 +139,7 @@ const Home = ({navigation: {navigate}}) => {
           <Text>{t('home')}</Text>
           <Text>{t('welcome')}</Text>
         </TouchableOpacity> */}
-        {/* <FlatList
+        <FlatList
           ref={flatListRef}
           data={items}
           renderItem={(item, index) => renderItem(item, index)}
@@ -129,7 +151,8 @@ const Home = ({navigation: {navigate}}) => {
             offset: 70 * index,
             index,
           })}
-        /> */}
+          // numColumns={3}
+        />
 
         <TouchableOpacity
           style={styles.hostButton}
@@ -171,15 +194,20 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   FlatlistContainer: {
-    height: height * 0.09,
-    width: width * 0.5,
-    backgroundColor: 'black',
+    height: height * 0.13,
+    width: width * 0.3,
+    // backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 7,
-    marginHorizontal: 5,
+    margin: 8,
     alignSelf: 'center',
-    margin: 15,
+  },
+  flowContainer: {
+    // minHeight: height * 0.5,
+    width: width * 0.92,
+    // backgroundColor: 'pink',
+    marginHorizontal: 13,
   },
 });
 
