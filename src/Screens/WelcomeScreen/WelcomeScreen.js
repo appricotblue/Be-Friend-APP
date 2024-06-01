@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
-import grp1 from '../../assets/png/grp1.png';
-import grp2 from '../../assets/png/grp2.png';
+import grp1 from '../../assets/png/wl1.png';
+import grp2 from '../../assets/png/wl2.png';
+import grp3 from '../../assets/png/wl3.png';
 import { height, width } from '../../Theme/Constants';
 import Colors from '../../Theme/Colors';
 import CommonButton from '../../components/CommonButton';
@@ -20,14 +21,14 @@ const WelcomeScreen = ({ navigation }) => {
     const pagerRef = useRef(null);
 
     const [Title, setTitle] = useState([
-        "Connect with your Fav Celebrity",
-        "Win Exciting Prizes",
-        "Be famous like your favorite ones"
+        "Discover Friends in Strangers",
+        "Earn and Level Up",
+        "Privacy at its peak"
     ]);
     const [SubTitle, setSubTitle] = useState([
-        "Dui nunc vel lorem ultrices arcu eu. Nibh mi porta fringilla congue massa.",
-        "Dui nunc vel lorem ultrices arcu eu. Nibh mi porta fringilla congue massa.",
-        "Dui nunc vel lorem ultrices arcu eu. Nibh mi porta fringilla congue massa."
+        "Connect with new people and form genuine friendships without revealing your identity.",
+        "Collect coins, advance through levels, and receive exciting rewards as you engage more with the app.",
+        "Enjoy secure audio and video calls using full security, use avatars to hide your face ensuring complete anonymity."
     ]);
 
 
@@ -57,11 +58,45 @@ const WelcomeScreen = ({ navigation }) => {
                     key={3}
                     resizeMode="cover"
                     style={styles.container}
-                    source={grp1}
+                    source={grp3}
                 />
             </PagerView>
             <View style={styles.bottomContainer}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 50, marginTop: 50 }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginTop: 20, }}>
+                <View style={styles.tabIndex}>
+                    <View
+                        style={[
+                            styles.indexIcon,
+                            {
+                                backgroundColor: index === 0 ? '#A811DA' : Colors.black,
+                                borderColor: '#BF5AE0',
+                                borderWidth: 1
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.indexIcon,
+                            {
+                                backgroundColor: index === 1 ? '#A811DA' : Colors.black,
+                                marginLeft: width / 55,
+                                borderColor: '#BF5AE0',
+                                borderWidth: 1
+                            },
+                        ]}
+                    />
+                    <View
+                        style={[
+                            styles.indexIcon,
+                            {
+                                backgroundColor: index === 2 ? '#A811DA' : Colors.black,
+                                marginLeft: width / 55,
+                                borderColor: '#BF5AE0',
+                                borderWidth: 1
+                            },
+                        ]}
+                    />
+                </View>
                     <Text style={styles.TileTxt}>{Title[index]}</Text>
                     <Text style={styles.subTxt}>{SubTitle[index]}</Text>
                     {index === 2 &&
@@ -72,56 +107,33 @@ const WelcomeScreen = ({ navigation }) => {
                             borderRadius={26}
                             texttitle={'white'}
                             width={width / 3}
-                        />}
+                        />
+                    }
                 </View>
 
-                <View style={styles.tabIndex}>
-                    <View
-                        style={[
-                            styles.indexIcon,
-                            {
-                                backgroundColor: index === 0 ? Colors.white : Colors.black,
-                                borderColor: 'white',
-                                borderWidth: 1
-                            },
-                        ]}
-                    />
-                    <View
-                        style={[
-                            styles.indexIcon,
-                            {
-                                backgroundColor: index === 1 ? Colors.white : Colors.black,
-                                marginLeft: width / 55,
-                                borderColor: 'white',
-                                borderWidth: 1
-                            },
-                        ]}
-                    />
-                    <View
-                        style={[
-                            styles.indexIcon,
-                            {
-                                backgroundColor: index === 2 ? Colors.white : Colors.black,
-                                marginLeft: width / 55,
-                                borderColor: 'white',
-                                borderWidth: 1
-                            },
-                        ]}
-                    />
-                </View>
+
                 <View style={styles.skipContainer}>
                     {index !== 2 &&
                         <>
-                            <TouchableOpacity
-                                onPress={() => navigation.replace('LoginScreen')}
+
+                        {/* <TouchableOpacity
+                            onPress={onNextPress}
                                 style={styles.skipBtn}>
-                                <Text style={styles.skipTxt}>Skip</Text>
-                            </TouchableOpacity>
+                            <Text style={styles.skipTxt}>Next</Text>
+                            </TouchableOpacity> */}
+                        <CommonButton
+                            onPress={() => onNextPress()}
+                            color={['#BF5AE0', '#A811DA']}
+                            title={'Next'}
+                            borderRadius={26}
+                            texttitle={'white'}
+                            width={width / 3}
+                        />
                             <TouchableOpacity
-                                onPress={onNextPress}
+                            onPress={() => navigation.replace('home')}
                                 style={styles.skipBtn}>
-                                <Text style={styles.skipTxt}>Next</Text>
-                            </TouchableOpacity>
+                            <Text style={styles.skipTxt}>Skip</Text>
+                        </TouchableOpacity>
                         </>
                     }
                 </View>
@@ -139,7 +151,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        height: height,
+        height: height - 250,
         width: '100%',
     },
     bottomContainer: {
@@ -148,36 +160,47 @@ const styles = StyleSheet.create({
         bottom: 0,
         width: '100%',
         alignSelf: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        // backgroundColor: 'rgba(0, 0, 0, 0.5)'
+        backgroundColor: '#10000E'
     },
     tabIndex: {
         flex: 1,
         flexDirection: 'row',
         paddingLeft: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        height: 50,
+        width: 100,
+        marginBottom: 25
+
     },
     indexIcon: {
-        height: 20,
-        width: 20,
+        height: 15,
+        width: 15,
         backgroundColor: 'white',
         borderRadius: 100,
     },
     skipContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
-        paddingBottom: 15
+        // flex: 1,
+        // flexDirection: 'row',
+        // justifyContent: 'space-between',
+        justifyContent: 'center',
+
+        alignItems: 'center',
+
+
+        width: '100%',
+        height: 100
     },
     skipBtn: {
         width: height / 7,
-        height: '100%',
+        // height: '70%',
         justifyContent: 'center',
         alignItems: 'center',
+        // backgroundColor: 'green'
     },
     skipTxt: {
         fontSize: 18,
-        color: 'white',
+        color: '#A811DA',
         textDecorationLine: 'underline',
         fontFamily: 'Jost',
         fontWeight: '400'

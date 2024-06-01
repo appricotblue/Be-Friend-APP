@@ -25,25 +25,34 @@ const ProfileScreen = ({navigation}) => {
           </TouchableOpacity>
           <Text style={styles.editProfileText}>Edit Profile</Text>
         </View>
-        <View style={styles.saveButton}>
+        <TouchableOpacity style={styles.saveButton}>
           <Text style={styles.saveText}>Save</Text>
-        </View>
+        </TouchableOpacity>
       </View>
       <Image source={ProfilePNG} style={styles.imageContainer} />
       <View style={styles.changeAvtrContainer}>
-        <Text>Change Avatar</Text>
+        <Text style={styles.textStyle}>Change Avatar</Text>
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Username</Text>
-        <CustomTextInput placeholder={'Vishnu@123'} />
+        <CustomTextInput
+          placeholder={'Vishnu@123'}
+          placeholderTextColor={'white'}
+        />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Date of Birth</Text>
-        <CustomTextInput placeholder={'07-10-1995'} />
+        <CustomTextInput
+          placeholder={'07-10-1995'}
+          placeholderTextColor={'white'}
+        />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Place</Text>
-        <CustomTextInput placeholder={'Thrissur'} />
+        <CustomTextInput
+          placeholder={'Thrissur'}
+          placeholderTextColor={'white'}
+        />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.inputhead}>Gender</Text>
@@ -165,6 +174,10 @@ const styles = StyleSheet.create({
     width: 10,
     borderRadius: 50,
     backgroundColor: '#8B13B1',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: '500',
   },
 });
 export default ProfileScreen;

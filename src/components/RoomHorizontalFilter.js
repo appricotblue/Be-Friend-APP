@@ -21,7 +21,7 @@ const RoomHorizontalFilter = ({data}) => {
             resizeMode="cover"
             source={item.img}
             style={Styles.container}>
-            <Text>{item.title}</Text>
+            <Text style={Styles.textStyle}>{item.title}</Text>
           </ImageBackground>
         </TouchableOpacity>
       </Animatable.View>
@@ -49,6 +49,11 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 15,
     marginHorizontal: 5,
+    marginVertical: 10,
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: '500',
   },
 });
 
