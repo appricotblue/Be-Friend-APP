@@ -118,6 +118,7 @@ const OtpScreen = props => {
 
                     <TextInputBox
                         value={email}
+                        isNumber={true}
                         errorText={checkEmail}
                         onChangeText={text => {
                             changeemail(text);
