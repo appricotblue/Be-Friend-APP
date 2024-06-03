@@ -29,6 +29,7 @@ import HorizontalList from '../../components/HorizontalList';
 import ImageBackgroundItem from '../../components/ImageBackgroundItem';
 import {ScrollView} from 'react-native-gesture-handler';
 
+
 const Reels = ({navigation: {navigate}}) => {
   const {t, changeLanguage} = useLanguage();
   const flatListRef = useRef(null);
@@ -52,6 +53,17 @@ const Reels = ({navigation: {navigate}}) => {
     navigate('cart');
   };
 
+  const renderItem = ({ item, index }) => (
+    <Animatable.View
+      animation="zoomIn"
+      duration={1000}
+      delay={300}
+    // style={{ flex: 1, marginTop: index % 2 == 0 ? 0 : 58 }}
+    >
+      <ImageBackgroundItem item={item} />
+
+    </Animatable.View>
+  );
   return (
     <SafeAreaView style={styles.container}>
       {/* <ImageBackground source={HomeBgPNG} style={styles.bgStyle}> */}
@@ -73,7 +85,7 @@ const Reels = ({navigation: {navigate}}) => {
               color: 'white',
               fontFamily: 'Livvic-BoldItalic',
             }}>
-            Private Callyyy
+            Private Call
           </Text>
           <Text
             style={{
@@ -103,7 +115,8 @@ const Reels = ({navigation: {navigate}}) => {
         <FlatList
           data={flatdata}
           numColumns={2}
-          renderItem={({item}) => <ImageBackgroundItem item={item} />}
+          renderItem={renderItem}
+          // renderItem={({item}) => }
           keyExtractor={item => item.id} // Assuming a unique 'id' property
         />
       </ScrollView>
