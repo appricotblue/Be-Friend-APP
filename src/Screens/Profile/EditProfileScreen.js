@@ -6,7 +6,7 @@ import ProfilePNG from '../../assets/png/ProfilePNG.png';
 import CustomTextInput from '../../components/CustomTextInput';
 // import { useLanguage } from '../../LanguageContext';
 
-const ProfileScreen = ({navigation}) => {
+const EditProfileScreen = ({navigation}) => {
   //   const { t, changeLanguage } = useLanguage()
 
   const gender = [
@@ -180,4 +180,4 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 });
-export default ProfileScreen;
+export default EditProfileScreen;
