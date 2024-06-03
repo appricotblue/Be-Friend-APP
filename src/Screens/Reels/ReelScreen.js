@@ -33,6 +33,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 const Reels = ({navigation: {navigate}}) => {
   const {t, changeLanguage} = useLanguage();
   const flatListRef = useRef(null);
+  
   const swiperdata = [
     {id: '1', title: 'Item 1', imageUrl: HomeBanner},
     {id: '2', title: 'Item 2', imageUrl: HomeBanner},
