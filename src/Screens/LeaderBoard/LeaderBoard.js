@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, FlatList, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, FlatList, StyleSheet, SafeAreaView } from 'react-native';
 // import images from '../../assets/Images';
-
 import LinearGradient from 'react-native-linear-gradient';
 // import Header from '../../Components/Header';
 // import ProfilePNG from '../../assets/png/ProfilePNG.png';
@@ -18,8 +17,7 @@ import coin from '../../assets/png/coin.png';
 import { height, width } from '../../Theme/Constants';
 import HorizontalFilter from '../../components/HorizontalFilter';
 
-
-const LeaderBoard = () => {
+const LeaderBoard = ({ navigation }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedTab, setSelectedTab] = useState(0);
     const Data = [
@@ -34,7 +32,6 @@ const LeaderBoard = () => {
         { id: 1, imageUrl: ProfilePNG },
         { id: 2, imageUrl: ProfilePNG },
         { id: 3, imageUrl: ProfilePNG },
-
     ];
     const CustomFonts = {
         // 'CustomFont-Regular': require('../../assets/fonts/Jost/Jost-Regular.ttf'),
@@ -42,26 +39,25 @@ const LeaderBoard = () => {
         // 'CustomFont-Italic': require('../fonts/CustomFont-Italic.ttf'),
     };
     const itemData = [
-        { id: 1, name: 'Alex Linderson', followers: 'Mariya Jacob', image: ProfilePNG },
-        { id: 2, name: 'Jacob Jones', followers: 'Mariya tacob', image: ProfilePNG },
-        { id: 3, name: 'Item Name 3', followers: ' Mariya Jacob', image: ProfilePNG },
-        { id: 4, name: 'Item Name 2', followers: 'Mariya Jacob', image: ProfilePNG },
-        { id: 5, name: 'Item Name 3', followers: 'Mariya Jacob', image: ProfilePNG },
+        { id: 1, name: 'Alex Linderson', followers: 'Aleena', image: ProfilePNG },
+        { id: 2, name: 'Jacob Jones', followers: 'Aleena', image: ProfilePNG },
+        { id: 3, name: 'Item Name 3', followers: 'Aleena', image: ProfilePNG },
+        { id: 4, name: 'Item Name 2', followers: 'Aleena', image: ProfilePNG },
+        { id: 5, name: 'Item Name 3', followers: 'Aleena', image: ProfilePNG },
         { id: 6, name: 'Item Name 3', followers: 'Mariya Jacob', image: ProfilePNG },
-
     ];
 
     // Filtered items based on search query
     const filteredItems = itemData.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    const renderItem = ({ item }) => (
-        <TouchableOpacity style={styles.itemContainer}>
+    const renderItem = ({ item, index }) => (
+        <TouchableOpacity onPress={() => navigation.navigate('BuyCoins')} style={styles.itemContainer}>
             <View style={{ width: width / 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ marginRight: 15, marginLeft: 6, color: 'white' }}>{item.id}</Text>
+                <Text style={{ marginRight: 15, marginLeft: 6, color: 'white' }}>{index + 4}</Text>
                 <Image source={item.image} style={styles.itemImage} />
             </View>
             <View style={{ width: width / 2, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}> {item.followers}</Text>
+                <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>{item.followers}</Text>
             </View>
             <View style={{ width: width / 5, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={{ color: 'white' }}>1888 Points</Text>
@@ -71,7 +67,6 @@ const LeaderBoard = () => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#10000E' }}>
-
             <View style={styles.container}>
                 <View style={styles.subHeader}>
                     <View style={styles.backContainer}>
@@ -79,57 +74,37 @@ const LeaderBoard = () => {
                             <BackArrowSVG />
                         </TouchableOpacity>
                         <Text style={styles.editProfileText}>Leader Board</Text>
-                        {/* <TouchableOpacity onPress={() => navigation.navigate('LeaderBoard')}>
-                            <Image source={Leaderboard} style={styles.imageContainer} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => drawer.current.openDrawer()}>
-                            <Image source={menu} style={styles.imageContainer} />
-                        </TouchableOpacity> */}
                     </View>
                 </View>
                 <View style={{ width: width, height: 40, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                     <HorizontalFilter data={Data} />
                 </View>
-
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: width / 1.1, alignSelf: 'center', }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: width / 1.1, alignSelf: 'center' }}>
                     <View style={{ width: width / 4, justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                        {/* <Text style={styles.ranktext}>2</Text> */}
                         <Image source={silverstar} resizeMode="cover" style={styles.rankimage} />
                         <TouchableOpacity style={styles.fanouterview}>
-                            <Image source={ProfilePNG} resizeMode="cover" style={styles.fanBackground}>
-                            </Image>
+                            <Image source={ProfilePNG} resizeMode="cover" style={styles.fanBackground} />
                         </TouchableOpacity>
-                        <Text style={styles.namestyle}> {'Joseph'}</Text>
-                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>{'2300 Points'}</Text>
+                        <Text style={styles.namestyle}>Joseph</Text>
+                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>2300 Points</Text>
                     </View>
                     <View style={{ width: width / 4, justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 50 }}>
-
                         <Image source={goldenstar} resizeMode="cover" style={styles.rankimage} />
                         <TouchableOpacity style={styles.ctrouterview}>
-
-                            <Image source={ProfilePNG} resizeMode="cover" style={styles.ctrBackground}>
-
-
-                            </Image>
+                            <Image source={ProfilePNG} resizeMode="cover" style={styles.ctrBackground} />
                         </TouchableOpacity>
-                        <Text style={styles.namestyle}> {'Martin'}</Text>
-                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>{'2300 Points'}</Text>
+                        <Text style={styles.namestyle}>Martin</Text>
+                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>2300 Points</Text>
                     </View>
                     <View style={{ width: width / 4, justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-
                         <Image source={bronz} resizeMode="cover" style={styles.rankimage} />
                         <TouchableOpacity style={styles.fanouterview}>
-
-                            <Image source={ProfilePNG} resizeMode="cover" style={styles.fanBackground}>
-
-
-                            </Image>
+                            <Image source={ProfilePNG} resizeMode="cover" style={styles.fanBackground} />
                         </TouchableOpacity>
-                        <Text style={styles.namestyle}> {'Joseph'}</Text>
-                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>{'2300 Points'}</Text>
+                        <Text style={styles.namestyle}>Joseph</Text>
+                        <Text style={{ fontWeight: '500', fontFamily: 'Jost', fontSize: 14, color: 'white' }}>2300 Points</Text>
                     </View>
                 </View>
-
                 <FlatList
                     data={filteredItems}
                     renderItem={renderItem}
@@ -145,7 +120,7 @@ const styles = StyleSheet.create({
     container: {
         height: height / 1.1,
         justifyContent: 'center',
-        alignSelf: 'center'
+        alignSelf: 'center',
     },
     imageContainer: {
         flexDirection: 'row',
@@ -165,20 +140,18 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginTop: 20,
         alignItems: 'center',
-        marginBottom: 30
+        marginBottom: 30,
     },
     input: {
         padding: 10,
-        width: width / 1.5
+        width: width / 1.5,
     },
     flatListContent: {
         marginTop: 20,
-        paddingBottom: 50
+        paddingBottom: 50,
     },
     itemContainer: {
         justifyContent: 'space-between',
-        // backgroundColor: '#fff',
-        // borderRadius: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#703AE642',
         padding: 10,
@@ -186,7 +159,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginHorizontal: 5,
         width: width / 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     itemImage: {
         width: 40,
@@ -198,7 +171,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontFamily: 'Jost',
         fontSize: 20,
-        color: 'black'
+        color: 'black',
     },
     followButton: {
         backgroundColor: 'blue',
@@ -213,59 +186,50 @@ const styles = StyleSheet.create({
     fanBackground: {
         height: 90,
         width: 90,
-
-        borderRadius: 45, // half of height/width for perfect circle
+        borderRadius: 45,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.3)', // Adjust opacity or color as needed
+        backgroundColor: 'rgba(0,0,0,0.3)',
     },
     rankimage: {
         height: 40,
         width: 40,
         marginBottom: 10,
-        // half of height/width for perfect circle
         justifyContent: 'center',
         alignItems: 'center',
-        // Adjust opacity or color as needed
     },
     ctrBackground: {
         height: 140,
         width: 140,
-
-        borderRadius: 70, // half of height/width for perfect circle
+        borderRadius: 70,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.3)', // Adjust opacity or color as needed
+        backgroundColor: 'rgba(0,0,0,0.3)',
     },
     outerview: {
         height: 115,
         width: 115,
-
-        borderRadius: 60, // half of height/width for perfect circle
+        borderRadius: 60,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#7E65C0'
+        backgroundColor: '#7E65C0',
     },
     fanouterview: {
         height: 95,
         width: 95,
-
-        borderRadius: 50, // half of height/width for perfect circle
+        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F15F79',
-
     },
     ctrouterview: {
         height: 150,
         width: 150,
-
-        borderRadius: 80, // half of height/width for perfect circle
+        borderRadius: 80,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#F15F79',
-        marginBottom: 0
-
+        marginBottom: 0,
     },
     subHeader: {
         marginTop: 15,
@@ -280,8 +244,6 @@ const styles = StyleSheet.create({
         width: width / 1.1,
         flexDirection: 'row',
         alignItems: 'center',
-    // justifyContent: 'space-between',
-    // backgroundColor: 'red'
     },
     ranktext: { fontSize: 20, fontWeight: '800', color: 'black', marginBottom: 10 },
     namestyle: { fontWeight: '800', fontFamily: 'Jost', fontSize: 16, color: 'white', marginTop: 15 },
@@ -290,7 +252,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
     },
-
 });
 
 export default LeaderBoard;
