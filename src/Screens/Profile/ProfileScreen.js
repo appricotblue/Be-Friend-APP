@@ -20,10 +20,11 @@ import editprofile from '../../assets/png/UserCircleDashed.png';
 import Wallet from '../../assets/png/Wallet.png';
 import Warning from '../../assets/png/Warning.png';
 import menu from '../../assets/png/menu.png';
+import Leaderboard from '../../assets/png/Leaderboard.png';
 import CustomTextInput from '../../components/CustomTextInput';
 import LinearGradient from 'react-native-linear-gradient';
 import { useLanguage } from '../../LanguageContext';
-import { useNavigation } from '@react-navigation/native';
+// import { useNavigation } from '@react-navigation/native';
 
 const drawerItems = [
     // { id: 'home', title: 'Home', icon: money },
@@ -38,11 +39,11 @@ const drawerItems = [
 ];
 
 
-const ProfileScreen = () => {
+const ProfileScreen = ({ navigation }) => {
     const { t, changeLanguage } = useLanguage();
     const [selected, setSelected] = useState(true);
     const drawer = useRef(null);
-    const navigation = useNavigation();
+    // const navigation = useNavigation();
 
     useEffect(() => {
         // console.log(t)
@@ -82,24 +83,27 @@ const ProfileScreen = () => {
     return (
         <DrawerLayoutAndroid
             ref={drawer}
-            drawerWidth={width / 1.8}
+            drawerWidth={width / 1.5}
             drawerPosition="left"
             renderNavigationView={renderDrawerContent}
         >
             <View style={styles.container}>
                 <View style={styles.subHeader}>
                     <View style={styles.backContainer}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                             <BackArrowSVG />
                         </TouchableOpacity>
                         <Text style={styles.editProfileText}>Profile</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('LeaderBoard')}>
+                            <Image source={Leaderboard} style={styles.imageContainer} />
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => drawer.current.openDrawer()}>
                             <Image source={menu} style={styles.imageContainer} />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styles.tabs}>
-                    <TouchableOpacity onPress={() => navigation.navigate('')} style={styles.tabItem}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.tabItem}>
                         <Text style={styles.tabTitle}>565</Text>
                         <Text style={styles.tabSubtitle}>{t('Following')}</Text>
                     </TouchableOpacity>
@@ -108,7 +112,7 @@ const ProfileScreen = () => {
                             <ImageBackground source={ProfilePNG} resizeMode="cover" style={styles.statusUploadBackground} />
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate('')} style={styles.tabItem}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.tabItem}>
                         <Text style={styles.tabTitle}>698</Text>
                         <Text style={styles.tabSubtitle}>{t('Followers')}</Text>
                     </TouchableOpacity>
@@ -182,8 +186,8 @@ const ProfileScreen = () => {
                     </LinearGradient>
                     <LinearGradient colors={['#41295A', '#2F0743']} style={styles.item}>
                         <View style={styles.giftedRow}>
-                            <Text style={styles.itemText}>100</Text>
-                            <Image source={love} style={styles.imageContainer} />
+                            <Text style={{ color: 'white', fontSize: 20 }}>100</Text>
+                            <Image source={love} style={{ height: 16, width: 20, marginLeft: 5 }} />
                         </View>
                         <Text style={styles.itemText}>Gifted</Text>
                     </LinearGradient>
@@ -227,9 +231,9 @@ const styles = StyleSheet.create({
         borderRightColor: '#C21EE9',
         borderLeftColor: '#C21EE9',
         borderWidth: 1,
-        width: width / 1.15,
+        width: width / 1.10,
         borderRadius: 15,
-        height: 56,
+        height: 50,
         alignSelf: 'center',
         marginBottom: 15,
         marginTop: 50,
@@ -240,7 +244,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     tabTitle: {
-        fontSize: 18,
+        fontSize: 15,
         fontFamily: 'Jost',
         fontWeight: '600',
         color: 'white',
@@ -260,6 +264,7 @@ const styles = StyleSheet.create({
         color: 'white',
         alignSelf: 'center',
         fontSize: 20,
+        marginTop: 20
     },
     infoRow: {
         flexDirection: 'row',
@@ -287,11 +292,11 @@ const styles = StyleSheet.create({
     tabs1: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
         width: width / 1.1,
         borderRadius: 15,
-        height: 40,
-        marginTop: 20,
+        height: 50,
+        marginTop: 10,
         marginBottom: 15,
     },
     tab1: {
@@ -302,7 +307,7 @@ const styles = StyleSheet.create({
     },
     walletBalance: {
         width: '100%',
-        height: 70,
+        height: 60,
         justifyContent: 'center',
         alignItems: 'center',
         borderTopLeftRadius: 15,
@@ -312,7 +317,7 @@ const styles = StyleSheet.create({
     },
     walletInfoRow: {
         flexDirection: 'row',
-        height: 34,
+        height: 30,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -327,7 +332,7 @@ const styles = StyleSheet.create({
     },
     heartBalance: {
         width: '100%',
-        height: 70,
+        height: 60,
         justifyContent: 'center',
         alignItems: 'center',
         borderTopRightRadius: 15,
@@ -337,7 +342,7 @@ const styles = StyleSheet.create({
     },
     heartInfoRow: {
         flexDirection: 'row',
-        height: 34,
+        height: 30,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 10,
@@ -362,7 +367,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 20,
+        marginBottom: 30,
     },
     itemImage: {
         height: height * 0.06,
@@ -400,6 +405,9 @@ const styles = StyleSheet.create({
     },
     giftedRow: {
         flexDirection: 'row',
+        // backgroundColor: 'green',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     drawerContainer: {
         flex: 1,

@@ -20,7 +20,7 @@ const EditProfileScreen = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.subHeader}>
         <View style={styles.backContainer}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate('profile')}>
             <BackArrowSVG />
           </TouchableOpacity>
           <Text style={styles.editProfileText}>Edit Profile</Text>
