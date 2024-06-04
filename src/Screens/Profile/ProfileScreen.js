@@ -90,7 +90,7 @@ const ProfileScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <View style={styles.subHeader}>
                     <View style={styles.backContainer}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+                        <TouchableOpacity onPress={() => navigation.replace('home')}>
                             <BackArrowSVG />
                         </TouchableOpacity>
                         <Text style={styles.editProfileText}>Profile</Text>
@@ -431,7 +431,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 1,
-        borderBottomColor: '#703AE6',
+        borderBottomColor: '#703AE642',
         height: 55,
         width: '100%',
         // backgroundColor: 'green'

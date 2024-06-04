@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import React, {useState} from 'react';
 import {height, width} from '../Theme/Constants';
 import * as Animatable from 'react-native-animatable';
@@ -13,9 +13,14 @@ const HorizontalFilter = ({data}) => {
           <TouchableOpacity
             style={[
               Styles.container,
-              {backgroundColor: selected == index ? '#A662B6' : 'black'},
+              { backgroundColor: selected == index ? '#A662B6' : item?.image ? 'rgba(0, 0, 5, 0.5)' : 'black' },
             ]}
             onPress={() => setSelected(index)}>
+
+            {item?.image && (
+              <Image source={item?.image} resizeMode='contain' style={Styles.rankimage} />
+            )}
+
             <Text style={{color: selected == index ? 'black' : '#A662B6'}}>
               {item.title}
             </Text>
@@ -47,6 +52,17 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 7,
     marginHorizontal: 5,
+    flexDirection: 'row'
+  },
+  rankimage: {
+    height: 19,
+    width: 20,
+    // marginBottom: 10, 
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10
+
   },
 });
 
