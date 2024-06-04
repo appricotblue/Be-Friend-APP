@@ -328,7 +328,9 @@ const Home = ({navigation: {navigate}}) => {
           numColumns={3}
           showsVerticalScrollIndicator={false}
         />
-        <TouchableOpacity style={styles.hostButton}>
+        <TouchableOpacity
+          style={styles.hostButton}
+          onPress={() => navigate('hostCall')}>
           <AddSVG marginHorizontal={5} />
           <Text style={styles.hostText}>{t('hostacall')}</Text>
         </TouchableOpacity>

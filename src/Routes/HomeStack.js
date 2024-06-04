@@ -8,6 +8,9 @@ import ProfileScreen from '../Screens/Profile/ProfileScreen';
 import Home from '../Screens/Home/Home';
 import LeaderBoard from '../Screens/LeaderBoard/LeaderBoard';
 import BuyCoins from '../Screens/BuyCoins/BuyCoins';
+import Transactions from '../Screens/Transactions/Transactions';
+import WalletScreen from '../Screens/Wallet/WalletScreen';
+import HostCallScreen from '../Screens/HostCall/HostCallScreen';
 
 const Stack = createStackNavigator();
 if (!__DEV__) {
@@ -25,6 +28,9 @@ const HomeStack = () => {
       <Stack.Screen name="profile" component={ProfileScreen} />
       <Stack.Screen name="LeaderBoard" component={LeaderBoard} />
       <Stack.Screen name="BuyCoins" component={BuyCoins} />
+      <Stack.Screen name="transactions" component={Transactions} />
+      <Stack.Screen name="wallet" component={WalletScreen} />
+      <Stack.Screen name="hostCall" component={HostCallScreen} />
     </Stack.Navigator>
   );
 };
