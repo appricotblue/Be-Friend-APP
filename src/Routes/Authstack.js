@@ -7,6 +7,7 @@ import HomeStack from './HomeStack';
 import WelcomeLoginScreen from '../Screens/Login/WelcomeLoginScreen';
 import OtpScreen from '../Screens/OtpScreen/OtpScreen';
 import SignUpScreen from '../Screens/SignUp/SignUpScreen';
+import AvtarselectionScreen from '../Screens/SignUp/AvtarselectionScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,6 +45,11 @@ const Authstack = () => {
         name="SignUpScreen"
         options={{ headerShown: false }}
         component={SignUpScreen}
+      />
+      <Stack.Screen
+        name="AvtarselectionScreen"
+        options={{ headerShown: false }}
+        component={AvtarselectionScreen}
       />
       <Stack.Screen
         name="WelcomeScreen"

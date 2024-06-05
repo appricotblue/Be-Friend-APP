@@ -145,7 +145,7 @@ const OtpScreen = props => {
                     color={['#BF5AE0', '#A811DA']}
                     title={'Verify Now'}
                     borderRadius={26}
-                    width={width / 1.4}
+                    width={width / 1.2}
                     texttitle={'white'}
                 />
                 <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%', flexDirection: 'row', }}>

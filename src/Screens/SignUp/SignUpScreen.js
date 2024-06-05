@@ -1,21 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
-import PagerView from 'react-native-pager-view';
+import DatePicker from 'react-native-date-picker';
 import grp1 from '../../assets/png/welcomelogin.png';
-import grp2 from '../../assets/png/grp2.png';
-import FunZone from '../../assets/png/FunZone.png';
 import { height, width } from '../../Theme/Constants';
 import Colors from '../../Theme/Colors';
 import CommonButton from '../../components/CommonButton';
 import TextInputBox from '../../components/TextInputBox';
 
 const SignUpScreen = ({ navigation }) => {
-    const [index, setIndex] = useState(0);
-
     const [email, changeemail] = useState('');
     const [checkEmail, changecheckEmail] = useState('');
-    const [checkPassword, changecheckPassword] = useState('');
-    const [password, changepassword] = useState('');
+    const [language, changelanguage] = useState('');
+    const [checklanguage, changechecklanguage] = useState('');
+    const [place, changeplace] = useState('');
+    const [checkplace, changecheckplace] = useState('');
     const [isLogin, changeIsLogin] = useState(false);
     const gender = [
         { id: 1, name: 'Male' },
@@ -23,116 +21,130 @@ const SignUpScreen = ({ navigation }) => {
         { id: 3, name: 'Other' },
     ];
     const [selected, setSelected] = useState('');
+    const [dateOfBirth, setDateOfBirth] = useState('');
+    const [checkdateOfBirth, changesetDateOfBirth] = useState('');
+    const [showPicker, setShowPicker] = useState(false);
 
     const onNextPress = () => {
-        navigation.replace('LoginScreen')
+        if (email === '') {
+            changecheckEmail('Please enter username'); // Set error message         
+        }
+        else if (dateOfBirth === '') {
+            changesetDateOfBirth('Please select dob'); // Set error message         
+        }
+        else if (language === '') {
+            changechecklanguage('Please select language'); // Set error message         
+        }
+        else if (place === '') {
+            changecheckplace('Please select place'); // Set error message         
+        }
+        else {
+            // navigation.replace('home');
+            navigation.replace('AvtarselectionScreen');
+            // local.storeLogin(true);
+        }
+
     };
 
-    const pagerRef = useRef(null);
+    const handleDateChange = (selectedDate) => {
+        if (selectedDate) {
+            const currentDate = selectedDate || new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
+            setDateOfBirth(formattedDate);
+            changesetDateOfBirth('')
+            setShowPicker(false); // Hide the date picker after selection
+        }
+    };
 
-    const [Title, setTitle] = useState([
-        'Welcome to',
-    ]);
-    const [SubTitle, setSubTitle] = useState([
-        "One place, Many friends!",
-
-    ]);
-
-
+    const showDatePicker = () => {
+        setShowPicker(true);
+    };
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: 'black' }}>
-
-            <Image
-                key={1}
-                resizeMode="cover"
-                style={styles.container}
-                source={grp1}
-            />
+            <Image key={1} resizeMode="cover" style={styles.container} source={grp1} />
 
             <View style={styles.bottomContainer}>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 10, marginTop: 20, }}>
-
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginBottom: 8, marginTop: 10 }}>
+                    <View style={{ width: width - 80, marginBottom: 10 }}>
                     <Text style={styles.TileTxt}>Fill up your details</Text>
+                    </View>
+
                     <TextInputBox
                         value={email}
-                        isNumber={true}
+                        isNumber={false}
                         errorText={checkEmail}
                         onChangeText={text => {
                             changeemail(text);
-                            changecheckEmail('')
+                            changecheckEmail('');
                         }}
                         placeholder={'Username'}
                         width={width / 1.2}
                         title={'Username'}
                     />
+                    <TouchableOpacity onPress={showDatePicker} style={styles.datePickerContainer}>
+                        <TextInputBox
+                            value={dateOfBirth}
+                            isNumber={false}
+                            errorText={checkdateOfBirth}
+                            editable={false}
+                            placeholder={'Date of Birth'}
+                            width={width / 1.2}
+                            title={'Date of Birth'}
+                        />
+                    </TouchableOpacity>
                     <TextInputBox
-                        value={email}
-                        isNumber={true}
-                        errorText={checkEmail}
+                        value={language}
+                        isNumber={false}
+                        errorText={checklanguage}
                         onChangeText={text => {
-                            changeemail(text);
-                            changecheckEmail('')
-                        }}
-                        placeholder={'Date of Birth'}
-                        width={width / 1.2}
-                        title={'Date of Birth'}
-                    />
-                    <TextInputBox
-                        value={email}
-                        isNumber={true}
-                        errorText={checkEmail}
-                        onChangeText={text => {
-                            changeemail(text);
-                            changecheckEmail('')
+                            changelanguage(text);
+                            changechecklanguage('');
                         }}
                         placeholder={'Language'}
                         width={width / 1.2}
                         title={'Language'}
                     />
                     <TextInputBox
-                        value={email}
-                        isNumber={true}
-                        errorText={checkEmail}
+                        value={place}
+                        isNumber={false}
+                        errorText={checkplace}
                         onChangeText={text => {
-                            changeemail(text);
-                            changecheckEmail('')
+                            changeplace(text);
+                            changecheckplace('');
                         }}
                         placeholder={'Place'}
                         width={width / 1.2}
                         title={'Place'}
                     />
-
-
                 </View>
 
                 <View style={styles.textContainer}>
                     <Text style={styles.inputhead}>Gender</Text>
                     <View style={styles.genderContainer}>
-                        {gender.map((item, key) => {
-                            return (
-                                <View style={styles.row1} key={item.id}>
-                                    <TouchableOpacity
-                                        style={styles.radioBtnOuter}
-                                        onPress={() => setSelected(item.id)}>
-                                        <View
-                                            style={[
-                                                styles.innerRadio,
-                                                {
-                                                    backgroundColor:
-                                                        selected == item.id ? '#8B13B1' : '#10000E',
-                                                },
-                                            ]}></View>
-                                    </TouchableOpacity>
-                                    <Text style={styles.genderText}>{item.name}</Text>
-                                </View>
-                            );
-                        })}
+                        {gender.map((item) => (
+                            <View style={styles.row1} key={item.id}>
+                                <TouchableOpacity
+                                    style={styles.radioBtnOuter}
+                                    onPress={() => setSelected(item.id)}>
+                                    <View
+                                        style={[
+                                            styles.innerRadio,
+                                            {
+                                                backgroundColor:
+                                                    selected === item.id ? '#8B13B1' : '#10000E',
+                                            },
+                                        ]}
+                                    />
+                                </TouchableOpacity>
+                                <Text style={styles.genderText}>{item.name}</Text>
+                            </View>
+                        ))}
                     </View>
                 </View>
                 <View style={styles.skipContainer}>
                     <CommonButton
-                        onPress={() => onNextPress()}
+                        onPress={onNextPress}
                         color={['#BF5AE0', '#A811DA']}
                         title={'Next'}
                         borderRadius={26}
@@ -141,8 +153,17 @@ const SignUpScreen = ({ navigation }) => {
                     />
                 </View>
 
-
-
+                {showPicker && (
+                    <DatePicker
+                        modal
+                        open={showPicker}
+                        date={new Date()}
+                        mode="date"
+                        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 18))}
+                        onConfirm={handleDateChange}
+                        onCancel={() => setShowPicker(false)}
+                    />
+                )}
             </View>
         </ScrollView>
     );
@@ -152,7 +173,7 @@ export default SignUpScreen;
 
 const styles = StyleSheet.create({
     pagerView: {
-        height: 220
+        height: 220,
     },
     container: {
         flex: 1,
@@ -160,13 +181,10 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     bottomContainer: {
-        // height: height - 220,
-        // position: 'absolute',
         bottom: 0,
         width: '100%',
         alignSelf: 'center',
-        // backgroundColor: 'rgba(0, 0, 0, 0.5)'
-        backgroundColor: 'black'
+        backgroundColor: 'black',
     },
     tabIndex: {
         flex: 1,
@@ -175,8 +193,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         height: 50,
         width: 100,
-        marginBottom: 25
-
+        marginBottom: 25,
     },
     indexIcon: {
         height: 15,
@@ -185,47 +202,35 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     skipContainer: {
-        // flex: 1,
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
         justifyContent: 'center',
-
         alignItems: 'center',
-
-
         width: '100%',
-        // height: 100
     },
     skipBtn: {
         width: 250,
-        // height: '70%',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'green'
     },
     skipTxt2: {
         fontSize: 10,
         color: 'white',
-        // textDecorationLine: 'underline',
         fontFamily: 'Jost',
-        fontWeight: '400'
+        fontWeight: '400',
     },
     skipTxt: {
         fontSize: 10,
         color: '#A811DA',
-        // textDecorationLine: 'underline',
         fontFamily: 'Jost',
-        fontWeight: '400'
+        fontWeight: '400',
     },
     nextTxt: {
         fontSize: 15,
         color: 'white',
         textDecorationLine: 'underline',
         fontFamily: 'Jost-Regular',
-        fontWeight: '400'
+        fontWeight: '400',
     },
     TileTxt: {
-        fontSize: 8,
         color: 'white',
         fontWeight: '700',
         fontSize: 24,
@@ -238,14 +243,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: height / 2.6,
         fontFamily: 'Jost',
-        fontWeight: '300'
+        fontWeight: '300',
     },
     textContainer: {
         height: height * 0.08,
         width: width * 0.8,
         marginTop: 1,
         alignSelf: 'center',
-        // backgroundColor: 'red'
     },
     inputhead: {
         color: 'grey',
@@ -294,5 +298,8 @@ const styles = StyleSheet.create({
     textStyle: {
         color: 'white',
         fontWeight: '500',
+    },
+    datePickerContainer: {
+        width: '100%',
     },
 });
