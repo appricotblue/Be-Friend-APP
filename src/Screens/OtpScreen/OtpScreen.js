@@ -64,15 +64,15 @@ const OtpScreen = props => {
     // };
 
     const isValidate = async () => {
-        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email format
+        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
         if (email === '') {
             changecheckEmail('Please enter OTP'); // Set error message
-            // alert('Please enter Email id'); // Set error message
+          
         }
         else {
             // navigation.replace('home');
-            navigation.replace('WelcomeScreen');
+            navigation.replace('SignUpScreen');
             // local.storeLogin(true);
         }
     };
