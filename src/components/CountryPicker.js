@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 10,
+        padding: 9,
         borderWidth: 1,
         borderColor: '#271926',
         borderRadius: 10,
         backgroundColor: '#271926',
-        minHeight: 50,
+        minHeight: 40,
         marginBottom: 7
     },
     buttonText: {

@@ -64,15 +64,15 @@ const OtpScreen = props => {
     // };
 
     const isValidate = async () => {
-        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email format
+        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
         if (email === '') {
             changecheckEmail('Please enter OTP'); // Set error message
-            // alert('Please enter Email id'); // Set error message
+          
         }
         else {
             // navigation.replace('home');
-            navigation.replace('WelcomeScreen');
+            navigation.replace('SignUpScreen');
             // local.storeLogin(true);
         }
     };
@@ -145,7 +145,7 @@ const OtpScreen = props => {
                     color={['#BF5AE0', '#A811DA']}
                     title={'Verify Now'}
                     borderRadius={26}
-                    width={width / 1.4}
+                    width={width / 1.2}
                     texttitle={'white'}
                 />
                 <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%', flexDirection: 'row', }}>

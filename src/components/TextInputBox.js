@@ -9,7 +9,7 @@ const TextInputBox = props => {
             <View style={[style.mainConatiner, { width: props?.width }]}>
                 <Text style={{ color: 'white', marginLeft: 15, marginBottom: 10, fontSize: 15 }}>{props?.title}</Text>
                 <View
-                    style={[style.manageAddressItem, { width: '100%', paddingBottom: 10 }]}>
+                    style={[style.manageAddressItem, { width: '100%', paddingBottom: 10, }]}>
                     <View
                         style={[
                             style.mainView,
@@ -17,7 +17,7 @@ const TextInputBox = props => {
                             {
                                 minHeight: props.multiline
                                     ? windowHeight / 5
-                                    : windowHeight / 28,
+                                    : 10,
                                 justifyContent: props.multiline ? 'flex-start' : 'center',
                             },
                         ]}>
@@ -27,6 +27,7 @@ const TextInputBox = props => {
                             multiline={props?.multiline}
                             value={props?.value}
                             color={'#ff6666'}
+                            editable={props?.editable}
                             onChangeText={text => props?.onChangeText(text)}
                             placeholderTextColor={props?.errorText == '' ? 'gray' : '#ff6666'}
                             placeholder={
@@ -35,12 +36,14 @@ const TextInputBox = props => {
                             style={{
                                 left: 20,
                                 width: '90%',
+                                height: 40,
 
                                 // minHeight: windowWidth / 10,
-                                minHeight: 50,
+                                minHeight: 10,
                                 top: props?.multiline && 10,
                                 paddingBottom: props?.multiline && 20,
                                 color: '#ffffff',
+
                             }}
                         />
                     </View>
@@ -59,13 +62,13 @@ const style = StyleSheet.create({
     mainConatiner: {
         alignSelf: 'center',
 
-        minHeight: windowHeight / 20,
+        minHeight: 25,
 
         // flexDirection: 'row',
     },
     mainView: {
         width: '100%',
-        minHeight: windowHeight / 28,
+        minHeight: 25,
         borderWidth: 1,
         borderColor: '#271926',
         alignSelf: 'center',

@@ -126,19 +126,8 @@ const LoginScreen = props => {
           <Text style={styles.subTileTxt}>{"We'll send a code to verify your number"}</Text>
         </View>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: width - 60, }}>
-          {/* <TextInputBox
-            value={password}
-            errorText={checkPassword}
-            onChangeText={text => {
-              changepassword(text);
-              changecheckPassword('')
-            }}
-            placeholder={'Country'}
-            width={width / 4}
-            title={'Country'}
-          /> */}
-          {/* <CountryPicker onCountryChange={handleCountryChange} /> */}
+        <View style={{ flexDirection: 'row', width: width, }}>
+
           <CountryPicker title="Country" onSelectCountry={handleSelectCountry} />
           <TextInputBox
             value={email}
@@ -149,7 +138,7 @@ const LoginScreen = props => {
               changecheckEmail('')
             }}
             placeholder={'Phone number'}
-            width={width / 2}
+            width={width / 1.8}
             title={'Phone number'}
           />
 
@@ -159,7 +148,7 @@ const LoginScreen = props => {
         {/* {selectedCountryId && (
           <Text>Selected Country ID: {selectedCountryId}</Text>
         )} */}
-        <View style={{ width: '80%', marginTop: 20 }}>
+        <View style={{ width: '88%', marginTop: 20 }}>
           <Image
             key={1}
             resizeMode="cover"
@@ -174,7 +163,7 @@ const LoginScreen = props => {
           color={['#BF5AE0', '#A811DA']}
           title={'Get Code'}
           borderRadius={26}
-          width={width / 1.4}
+          width={width / 1.2}
           texttitle={'white'}
         />
         <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%' }}>
