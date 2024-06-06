@@ -10,7 +10,9 @@ import {
     Image,
     TouchableOpacity,
     ActivityIndicator,
-    ImageBackground
+    ImageBackground,
+    TouchableWithoutFeedback,
+    Keyboard
 } from 'react-native';
 
 import TextInputBox from '../../components/TextInputBox';
@@ -104,7 +106,8 @@ const OtpScreen = props => {
 
 
     return (
-        <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <SafeAreaView style={styles.container}>
             <View style={styles.image}>
 
 
@@ -156,7 +159,8 @@ const OtpScreen = props => {
                 </View>
             </View>
             {/* </ImageBackground> */}
-        </View>
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
 
     );
 };

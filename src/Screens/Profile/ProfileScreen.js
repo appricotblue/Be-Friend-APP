@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   DrawerLayoutAndroid,
+  SafeAreaView
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import BackArrowSVG from '../../assets/svg/BackArrowSVG';
@@ -112,7 +113,7 @@ const ProfileScreen = ({navigation}) => {
       drawerWidth={width / 1.5}
       drawerPosition="left"
       renderNavigationView={renderDrawerContent}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.subHeader}>
           <View style={styles.backContainer}>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
@@ -235,7 +236,7 @@ const ProfileScreen = ({navigation}) => {
             <Text style={styles.itemText}>Gifted</Text>
           </LinearGradient>
         </View>
-      </View>
+      </SafeAreaView>
     </DrawerLayoutAndroid>
   );
 };
@@ -335,6 +336,7 @@ const styles = StyleSheet.create({
   tabs1: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignSelf: 'center',
     // backgroundColor: 'white',
     width: width / 1.1,
     borderRadius: 15,
