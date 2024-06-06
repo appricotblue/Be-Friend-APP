@@ -12,8 +12,10 @@ import CardBgPNG from '../assets/png/CardBgPNG.png';
 import video from '../assets/png/video.png';
 import * as Animatable from 'react-native-animatable';
 import {height, width} from '../Theme/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const RoomItemCard = ({data}) => {
+  const navigation = useNavigation();
   const renderItem = ({item}) => {
     return (
       <Animatable.View animation="zoomIn" duration={800} delay={300}>
@@ -25,13 +27,13 @@ const RoomItemCard = ({data}) => {
             <Image source={item.img} style={styles.imageStyle} />
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.title}>{item.lng}</Text>
-            <View style={styles.btnstyle}>
+            <TouchableOpacity onPress={() => navigation.navigate('LoadingScreen')} style={styles.btnstyle}>
               <Text style={{color: 'black'}}>Join</Text>
               <Image
                 source={video}
                 style={{width: 12, height: 7, marginLeft: 5}}
               />
-            </View>
+            </TouchableOpacity>
           </ImageBackground>
         </View>
       </Animatable.View>

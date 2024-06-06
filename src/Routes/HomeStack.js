@@ -11,6 +11,9 @@ import BuyCoins from '../Screens/BuyCoins/BuyCoins';
 import Transactions from '../Screens/Transactions/Transactions';
 import WalletScreen from '../Screens/Wallet/WalletScreen';
 import HostCallScreen from '../Screens/HostCall/HostCallScreen';
+import ShareAndEarnScreen from '../Screens/ShareAndEarn/ShareAndEarnScreen';
+import SearchScreen from '../Screens/SearchScreen/SearchScreen';
+import LoadingScreen from '../Screens/SearchScreen/LoadingScreen';
 
 const Stack = createStackNavigator();
 if (!__DEV__) {
@@ -31,6 +34,9 @@ const HomeStack = () => {
       <Stack.Screen name="transactions" component={Transactions} />
       <Stack.Screen name="wallet" component={WalletScreen} />
       <Stack.Screen name="hostCall" component={HostCallScreen} />
+      <Stack.Screen name="share" component={ShareAndEarnScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
     </Stack.Navigator>
   );
 };

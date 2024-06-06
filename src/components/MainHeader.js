@@ -13,7 +13,7 @@ import FunzoneSVG from '../assets/svg/FunzoneSVG';
 import PointsSVG from '../assets/svg/PointsSVG';
 import SearchSVG from '../assets/svg/SearchSVG';
 
-const MainHeader = ({onProfilePress}) => {
+const MainHeader = ({ onProfilePress, onSearchPress }) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
@@ -31,7 +31,9 @@ const MainHeader = ({onProfilePress}) => {
           <PointsSVG />
           <Text style={styles.pointsText}>20,000</Text>
         </View>
+        <TouchableOpacity onPress={onSearchPress}>
         <SearchSVG />
+        </TouchableOpacity>
       </View>
     </View>
   );

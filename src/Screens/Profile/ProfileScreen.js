@@ -116,7 +116,7 @@ const ProfileScreen = ({navigation}) => {
       <SafeAreaView style={styles.container}>
         <View style={styles.subHeader}>
           <View style={styles.backContainer}>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <TouchableOpacity onPress={() => navigation.replace('home')}>
               <BackArrowSVG />
             </TouchableOpacity>
             <Text style={styles.editProfileText}>Profile</Text>

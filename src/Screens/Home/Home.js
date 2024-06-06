@@ -314,7 +314,7 @@ const Home = ({navigation: {navigate}}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={HomeBgPNG} style={styles.bgStyle}>
-        <MainHeader onProfilePress={() => onProfilePress()} />
+        <MainHeader onProfilePress={() => onProfilePress()} onSearchPress={() => navigate('SearchScreen')} />
         <View>
           <Image source={PrivatePNG} style={styles.svgStle}></Image>
         </View>
