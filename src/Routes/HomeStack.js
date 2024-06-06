@@ -12,6 +12,10 @@ import Transactions from '../Screens/Transactions/Transactions';
 import WalletScreen from '../Screens/Wallet/WalletScreen';
 import HostCallScreen from '../Screens/HostCall/HostCallScreen';
 import ShareAndEarnScreen from '../Screens/ShareAndEarn/ShareAndEarnScreen';
+import WarningScreen from '../Screens/Warning/WarningScreen';
+import KYCScreen from '../Screens/KYC/KYCScreen';
+import AccountScreen from '../Screens/Account/AccountScreen';
+import FriendRequestScreen from '../Screens/FriendRequest/FriendRequestScreen';
 
 const Stack = createStackNavigator();
 if (!__DEV__) {
@@ -33,6 +37,10 @@ const HomeStack = () => {
       <Stack.Screen name="wallet" component={WalletScreen} />
       <Stack.Screen name="hostCall" component={HostCallScreen} />
       <Stack.Screen name="share" component={ShareAndEarnScreen} />
+      <Stack.Screen name="warning" component={WarningScreen} />
+      <Stack.Screen name="kyc" component={KYCScreen} />
+      <Stack.Screen name="account" component={AccountScreen} />
+      <Stack.Screen name="friendrequest" component={FriendRequestScreen} />
     </Stack.Navigator>
   );
 };

@@ -18,7 +18,7 @@ import SharePNG from '../../assets/png/SharePNG.png';
 import Share from 'react-native-share';
 import Clipboard from '@react-native-clipboard/clipboard';
 
-const ShareAndEarnScreen = () => {
+const ShareAndEarnScreen = ({navigation}) => {
   const shareLink = async () => {
     const options = {
       message: 'https://aindriya.com/',
@@ -159,7 +159,6 @@ const styles = StyleSheet.create({
     height: height * 0.17,
     width: width * 0.9,
     borderRadius: 15,
-    backgroundColor: 'pink',
   },
   bgStyle: {
     height: height * 0.17,

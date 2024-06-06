@@ -330,7 +330,7 @@ const Home = ({navigation: {navigate}}) => {
         />
         <TouchableOpacity
           style={styles.hostButton}
-          onPress={() => navigate('hostCall')}>
+          onPress={() => navigate('kyc')}>
           <AddSVG marginHorizontal={5} />
           <Text style={styles.hostText}>{t('hostacall')}</Text>
         </TouchableOpacity>

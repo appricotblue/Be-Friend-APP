@@ -43,7 +43,7 @@ const drawerItems = [
   {id: 'Blocked chats', title: 'Blocked chats', icon: Warning},
   {id: 'Feedback', title: 'Feedback', icon: Star},
   {id: 'Terms and conditions', title: 'Terms and conditions', icon: terms},
-  {id: 'Log Out', title: 'Log Out', icon: SignOut},
+  {id: 'Account', title: 'Account', icon: SignOut},
 ];
 
 const ProfileScreen = ({navigation}) => {
@@ -93,6 +93,9 @@ const ProfileScreen = ({navigation}) => {
         break;
       case 'Wallet':
         navigation.replace('wallet');
+        break;
+      case 'Account':
+        navigation.replace('account');
         break;
 
       case 'settings':
