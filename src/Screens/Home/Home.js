@@ -20,7 +20,7 @@
 // import PrivatePNG from '../../assets/png/PrivatePNG.png';
 
 // import PrivateSVG from '../../assets/svg/PrivateSVG';
-// import AddSVG from '../../assets/svg/AddSVG';
+// import RandomSVG from '../../assets/svg/RandomSVG';
 
 // import {height, width} from '../../Theme/Constants';
 // import HorizontalFilter from '../../components/HorizontalFilter';
@@ -145,7 +145,7 @@
 //         />
 
 //         <TouchableOpacity style={styles.hostButton}>
-//           <AddSVG marginHorizontal={5} />
+//           <RandomSVG marginHorizontal={5} />
 //           <Text style={styles.hostText}>{t('hostacall')}</Text>
 //         </TouchableOpacity>
 //       </ImageBackground>
@@ -227,11 +227,13 @@ import PrivatePNG from '../../assets/png/PrivatePNG.png';
 
 import PrivateSVG from '../../assets/svg/PrivateSVG';
 
-import AddSVG from '../../assets/svg/AddSVG';
+import RandomSVG from '../../assets/svg/RandomSVG';
 
 import {height, width} from '../../Theme/Constants';
 import HorizontalFilter from '../../components/HorizontalFilter';
 import * as Animatable from 'react-native-animatable';
+import BottomPopupModal from '../../components/HomeBottomModal';
+import EarnModal from '../../components/EarnModal';
 
 const Data = [
   {id: 1, title: 'Romance'},
@@ -286,13 +288,20 @@ const Home = ({navigation: {navigate}}) => {
   const onProfilePress = () => {
     navigate('profile');
   };
-
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isEarnModalVisible, setEarnIsModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(items.length - 1);
 
   const initialScrollIndex = Math.min(
     Math.floor(currentIndex / numColumns),
     Math.floor(items.length / numColumns) - 1,
   );
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
+  };
+  const toggleEarnModal = () => {
+    setEarnIsModalVisible(!isEarnModalVisible);
+  };
 
   const renderItem = ({item, index}) => (
     <Animatable.View
@@ -314,7 +323,11 @@ const Home = ({navigation: {navigate}}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={HomeBgPNG} style={styles.bgStyle}>
-        <MainHeader onProfilePress={() => onProfilePress()} />
+        <MainHeader
+          onProfilePress={() => onProfilePress()}
+          onSearchPress={() => navigate('SearchScreen')}
+          onEarnPress={() => setEarnIsModalVisible(true)}
+        />
         <View>
           <Image source={PrivatePNG} style={styles.svgStle}></Image>
         </View>
@@ -330,10 +343,12 @@ const Home = ({navigation: {navigate}}) => {
         />
         <TouchableOpacity
           style={styles.hostButton}
-          onPress={() => navigate('kyc')}>
-          <AddSVG marginHorizontal={5} />
-          <Text style={styles.hostText}>{t('hostacall')}</Text>
+          onPress={() => setIsModalVisible(true)}>
+          <RandomSVG marginHorizontal={5} />
+          <Text style={styles.hostText}>{t('Random')}</Text>
         </TouchableOpacity>
+        <BottomPopupModal visible={isModalVisible} onClose={toggleModal} />
+        <EarnModal visible={isEarnModalVisible} onClose={toggleEarnModal} />
       </ImageBackground>
     </SafeAreaView>
   );

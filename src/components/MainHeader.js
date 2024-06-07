@@ -9,11 +9,12 @@ import {
 import React from 'react';
 import {height, width} from '../Theme/Constants';
 import ProfilePNG from '../assets/png/ProfilePNG.png';
-import FunzoneSVG from '../assets/svg/FunzoneSVG';
+import CashSVG from '../assets/svg/CashSVG';
 import PointsSVG from '../assets/svg/PointsSVG';
 import SearchSVG from '../assets/svg/SearchSVG';
+import AddSVG from '../assets/svg/AddSVG';
 
-const MainHeader = ({onProfilePress}) => {
+const MainHeader = ({onProfilePress, onSearchPress, onEarnPress}) => {
   return (
     <View style={styles.container}>
       <View style={styles.row1}>
@@ -22,16 +23,21 @@ const MainHeader = ({onProfilePress}) => {
           style={styles.imageContainer}>
           <Image source={ProfilePNG} style={styles.imageContainer} />
         </TouchableOpacity>
-
-        <FunzoneSVG height={60} width={100} />
-      </View>
-
-      <View style={styles.row2}>
         <View style={styles.pointsContainer}>
           <PointsSVG />
           <Text style={styles.pointsText}>20,000</Text>
         </View>
-        <SearchSVG />
+      </View>
+
+      <View style={styles.row2}>
+        <TouchableOpacity onPress={onSearchPress}>
+          <SearchSVG marginLeft={25} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.earnContainer} onPress={onEarnPress}>
+          <CashSVG />
+          <Text style={styles.pointsText}>Earn</Text>
+          <AddSVG />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -77,7 +83,18 @@ const styles = StyleSheet.create({
   },
   pointsText: {
     color: 'white',
-    marginLeft: 8,
+    marginHorizontal: 6,
+  },
+  earnContainer: {
+    height: height * 0.05,
+    minWidth: width * 0.2,
+    borderWidth: 1.5,
+    borderRadius: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginLeft: 15,
+    backgroundColor: '#A916DA',
   },
 });
 

@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -10,7 +8,10 @@ import {
   Image,
   TouchableOpacity,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 
 import TextInputBox from '../../components/TextInputBox';
@@ -20,14 +21,13 @@ import { useNavigation } from '@react-navigation/native';
 import { setName, setDarkmode } from '../../redux/action';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import local from '../../Storage/Local';
-// import images from '../../assets/Images';
 import { height, width } from '../../Theme/Constants';
 import FunZone from '../../assets/png/Mobile.png';
 import CustomTextInput from '../../components/CustomTextInput';
 import CountryPicker from '../../components/CountryPicker';
 
-var windowWidth = Dimensions.get('window').width; //full width
-var windowHeight = Dimensions.get('window').height; //full height
+var windowWidth = Dimensions.get('window').width; // full width
+var windowHeight = Dimensions.get('window').height; // full height
 
 const LoginScreen = props => {
   const navigation = useNavigation();
@@ -48,52 +48,32 @@ const LoginScreen = props => {
       if (value !== null) {
         changecheckEmail(value);
       }
-      const paasword = await AsyncStorage.getItem('password');
-      if (paasword !== null) {
-        changecheckPassword(paasword);
+      const password = await AsyncStorage.getItem('password');
+      if (password !== null) {
+        changecheckPassword(password);
       }
     } catch (e) {
       return null;
-      // error reading value
     }
   };
-
-  // const isvalidate = async () => {
-  //   if (email == '') {
-  //     alert('Please enter Email id');
-  //   } else if (password == '') {
-  //     alert('Please enter password');
-  //   }  else {
-  //     navigation.replace('Home')
-  //     // local.storeLogin(true);
-  //   }
-  // };
 
   const isValidate = async () => {
     const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email format
 
     if (email === '') {
-      changecheckEmail('Enter  Mobile no'); // Set error message
-      // alert('Please enter Email id'); // Set error message
-    }
-
-    else if (selectedCountryId == '') {
+      changecheckEmail('Enter Mobile no'); // Set error message
+    } else if (selectedCountryId === '') {
       changecheckPassword('code'); // Set error message
-      // alert('Please enter password'); // Set error message
-    }
-
-    else {
+    } else {
       navigation.replace('OtpScreen');
-      // navigation.replace('WelcomeScreen');
-      // local.storeLogin(true);
     }
   };
-
 
   const clearAll = async () => {
     changeemail('');
     changepassword('');
   };
+
   useEffect(() => {
     AsyncStorage.getItem('isLogin', value => {
       if (value != null || value != undefined) {
@@ -103,81 +83,68 @@ const LoginScreen = props => {
       }
     });
   }, []);
+
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       changeemail('');
       changepassword('');
-      //Put your Data loading function here instead of my loadData()
     });
 
     return unsubscribe;
   }, [navigation]);
 
-
-
   return (
-    <View style={styles.container}>
-      <View style={styles.image}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView style={styles.image}>
+          <View style={{ width: width - 60, marginTop: 30, marginBottom: 40 }}>
+            <Text style={styles.TileTxt}>{"What's your number? "}</Text>
+            <Text style={styles.subTileTxt}>{"We'll send a code to verify your number"}</Text>
+          </View>
 
+          <View style={{ flexDirection: 'row', width: width }}>
+            <CountryPicker title="Country" onSelectCountry={handleSelectCountry} />
+            <TextInputBox
+              value={email}
+              isNumber={true}
+              errorText={checkEmail}
+              onChangeText={text => {
+                changeemail(text);
+                changecheckEmail('');
+              }}
+              placeholder={'Phone number'}
+              width={width / 1.8}
+              title={'Phone number'}
+            />
+          </View>
 
-        {/* <ImageBackground source={FunZone} resizeMode="cover" style={styles.image}> */}
-        <View style={{ width: width - 60, marginTop: 30, marginBottom: 40, }}>
-          <Text style={styles.TileTxt}>{"What's your number? "}</Text>
-          <Text style={styles.subTileTxt}>{"We'll send a code to verify your number"}</Text>
-        </View>
+          <View style={{ width: '88%', marginTop: 20 }}>
+            <Image
+              key={1}
+              resizeMode="cover"
+              style={{ width: 170, height: 240, marginTop: 6, marginBottom: 6 }}
+              source={FunZone}
+            />
+          </View>
 
-        <View style={{ flexDirection: 'row', width: width, }}>
-
-          <CountryPicker title="Country" onSelectCountry={handleSelectCountry} />
-          <TextInputBox
-            value={email}
-            isNumber={true}
-            errorText={checkEmail}
-            onChangeText={text => {
-              changeemail(text);
-              changecheckEmail('')
-            }}
-            placeholder={'Phone number'}
-            width={width / 1.8}
-            title={'Phone number'}
+          <CommonButton
+            onPress={() => isValidate()}
+            color={['#BF5AE0', '#A811DA']}
+            title={'Get Code'}
+            borderRadius={26}
+            width={width / 1.2}
+            texttitle={'white'}
           />
 
-        </View>
-
-
-        {/* {selectedCountryId && (
-          <Text>Selected Country ID: {selectedCountryId}</Text>
-        )} */}
-        <View style={{ width: '88%', marginTop: 20 }}>
-          <Image
-            key={1}
-            resizeMode="cover"
-            style={{ width: 170, height: 240, marginTop: 6, marginBottom: 6 }}
-            source={FunZone}
-          />
-        </View>
-
-        <CommonButton
-          onPress={() => isValidate()}
-          // onPress={() => navigation.replace('Home')}
-          color={['#BF5AE0', '#A811DA']}
-          title={'Get Code'}
-          borderRadius={26}
-          width={width / 1.2}
-          texttitle={'white'}
-        />
-        <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%' }}>
-          <Text style={styles.subTxt}>{"No worries!,We won't show"}</Text>
-          <Text style={styles.subTxt}>{"  your number on profile"}</Text>
-
-        </View>
-      </View>
-      {/* </ImageBackground> */}
-    </View>
-
+          <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%' }}>
+            <Text style={styles.subTxt}>{"No worries!,We won't show"}</Text>
+            <Text style={styles.subTxt}>{"  your number on profile"}</Text>
+          </View>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -186,11 +153,8 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: width,
-  // justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#10000E'
-
-
+    backgroundColor: '#10000E',
   },
   text: {
     color: 'white',
@@ -205,15 +169,14 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'Jost',
     fontWeight: '700',
-    paddingBottom: 5
-
+    paddingBottom: 5,
   },
   subTileTxt: {
     fontSize: 14,
     color: 'white',
     fontFamily: 'Jost',
     fontWeight: '600',
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   subTxt: {
     fontSize: 15,
@@ -222,7 +185,8 @@ const styles = StyleSheet.create({
     width: width,
     fontFamily: 'Jost',
     fontWeight: '300',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
 });
+
 export default LoginScreen;

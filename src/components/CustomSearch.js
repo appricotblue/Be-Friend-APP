@@ -9,12 +9,14 @@ function CustomSearch({
   placeholder,
   keyboardType,
   placeholderTextColor,
+  searchwidth = width * 0.9,
+  inputwidth= width * 0.8
 }) {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { width: searchwidth, }]}>
       <SearchSVG />
       <TextInput
-        style={styles.inputStyle}
+        style={[styles.inputStyle,{  width: inputwidth}]}
         onChangeText={onChangeText}
         value={value}
         placeholder={'Search'}
@@ -28,7 +30,7 @@ function CustomSearch({
 const styles = StyleSheet.create({
   container: {
     height: height * 0.05,
-    width: width * 0.9,
+
     borderWidth: 1,
     borderColor: '#41295A',
     borderRadius: 10,
@@ -40,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   inputStyle: {
-    width: width * 0.8,
+  
     height: height * 0.05,
     // backgroundColor: 'pink',
     color: 'white',

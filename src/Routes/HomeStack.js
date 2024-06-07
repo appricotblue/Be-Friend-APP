@@ -12,10 +12,13 @@ import Transactions from '../Screens/Transactions/Transactions';
 import WalletScreen from '../Screens/Wallet/WalletScreen';
 import HostCallScreen from '../Screens/HostCall/HostCallScreen';
 import ShareAndEarnScreen from '../Screens/ShareAndEarn/ShareAndEarnScreen';
+import SearchScreen from '../Screens/SearchScreen/SearchScreen';
+import LoadingScreen from '../Screens/SearchScreen/LoadingScreen';
 import WarningScreen from '../Screens/Warning/WarningScreen';
 import KYCScreen from '../Screens/KYC/KYCScreen';
 import AccountScreen from '../Screens/Account/AccountScreen';
 import FriendRequestScreen from '../Screens/FriendRequest/FriendRequestScreen';
+import GroupCallScreen from '../Screens/GroupCall/GroupCallScreen';
 
 const Stack = createStackNavigator();
 if (!__DEV__) {
@@ -41,6 +44,9 @@ const HomeStack = () => {
       <Stack.Screen name="kyc" component={KYCScreen} />
       <Stack.Screen name="account" component={AccountScreen} />
       <Stack.Screen name="friendrequest" component={FriendRequestScreen} />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
+      <Stack.Screen name="groupCall" component={GroupCallScreen} />
     </Stack.Navigator>
   );
 };

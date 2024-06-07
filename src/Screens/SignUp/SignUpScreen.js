@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, SafeAreaView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import grp1 from '../../assets/png/welcomelogin.png';
 import { height, width } from '../../Theme/Constants';
@@ -61,7 +61,8 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: 'black' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#10000E' }}>
+            <ScrollView >
             <Image key={1} resizeMode="cover" style={styles.container} source={grp1} />
 
             <View style={styles.bottomContainer}>
@@ -166,6 +167,7 @@ const SignUpScreen = ({ navigation }) => {
                 )}
             </View>
         </ScrollView>
+        </SafeAreaView>
     );
 };
 
