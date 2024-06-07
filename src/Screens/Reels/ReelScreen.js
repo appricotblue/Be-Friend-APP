@@ -8,6 +8,7 @@ import {
   ImageBackground,
   FlatList,
   View,
+  Image
 } from 'react-native';
 import {useLanguage} from '../../LanguageContext';
 import MainHeader from '../../components/MainHeader';
@@ -24,6 +25,9 @@ import grp1 from '../../assets/png/grp1.png';
 import grp2 from '../../assets/png/grp2.png';
 import grp3 from '../../assets/png/grp3.png';
 import grp4 from '../../assets/png/grp4.png';
+import Frame3 from '../../assets/png/Frame3.png';
+import Frame2 from '../../assets/png/Frame2.png';
+import Frame1 from '../../assets/png/Frame1.png';
 import SwiperComponent from '../../components/SwiperComponent';
 import HorizontalList from '../../components/HorizontalList';
 import ImageBackgroundItem from '../../components/ImageBackgroundItem';
@@ -50,10 +54,31 @@ const Reels = ({navigation: {navigate}}) => {
     {id: '3', title: 'Virat Kohli', imageUrl: grp3},
     {id: '4', title: 'Vttt Kohli', imageUrl: grp1},
   ];
+  const framedata = [
+    { id: '1', title: 'Virat Kohli', imageUrl: Frame1 },
+    { id: '2', title: 'Vttt Kohli', imageUrl: Frame2 },
+    { id: '3', title: 'Virat Kohli', imageUrl: Frame3 },
+
+  ];
   const OnHomePress = () => {
     navigate('cart');
   };
 
+
+  const renderItem2 = ({ item, index }) => (
+    <Animatable.View
+      animation="zoomIn"
+      duration={1000}
+      delay={300}
+    // style={{ flex: 1, marginTop: index % 2 == 0 ? 0 : 58 }}
+    >
+      <TouchableOpacity>
+        <Image source={item.imageUrl} style={styles.svgStle}></Image>
+      </TouchableOpacity>
+
+
+    </Animatable.View>
+  );
   const renderItem = ({ item, index }) => (
     <Animatable.View
       animation="zoomIn"
@@ -70,7 +95,7 @@ const Reels = ({navigation: {navigate}}) => {
       {/* <ImageBackground source={HomeBgPNG} style={styles.bgStyle}> */}
       <MainHeader />
       <ScrollView>
-        <View style={{height: 150, marginTop: 1}}>
+        <View style={{ height: 180, marginTop: 1, width: width }}>
           <SwiperComponent data={swiperdata} />
         </View>
         <View
@@ -86,7 +111,7 @@ const Reels = ({navigation: {navigate}}) => {
               color: 'white',
               fontFamily: 'Livvic-BoldItalic',
             }}>
-            Private Call
+            Discover
           </Text>
           <Text
             style={{
@@ -94,14 +119,22 @@ const Reels = ({navigation: {navigate}}) => {
               color: 'white',
               fontFamily: 'Livvic-BoldItalic',
             }}>
-            View All
+
           </Text>
         </View>
         <View style={{marginTop: 15}}>
-          <HorizontalList
+          <FlatList
+            data={framedata}
+            // numColumns={2}
+            renderItem={renderItem2}
+            horizontal
+            // renderItem={({item}) => }
+            keyExtractor={item => item.id} // Assuming a unique 'id' property
+          />
+          {/* <HorizontalList
             data={data}
             onPressStatusUpload={() => onPressStatusUpload()}
-          />
+          /> */}
         </View>
         <View
           style={{
@@ -165,6 +198,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     alignSelf: 'center',
     margin: 15,
+  },
+  svgStle: {
+    height: height * 0.26,
+    width: width * .45,
+  // backgroundColor: 'red'
+
+
   },
 });
 

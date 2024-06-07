@@ -17,9 +17,21 @@ import map from '../../assets/png/MapPin.png';
 import timer from '../../assets/png/Hourglass.png';
 import gender from '../../assets/png/GenderMale.png';
 import love from '../../assets/png/love.png';
-import money from '../../assets/png/money.png';
+import Plus from '../../assets/png/Plus.png';
 import smile from '../../assets/png/smile.png';
 import coin from '../../assets/png/coin.png';
+import trophy from '../../assets/png/trophy.png';
+import gift from '../../assets/png/gift.png';
+import smily from '../../assets/png/smily.png';
+
+
+
+
+import bg1 from '../../assets/png/bg1.png';
+import bg2 from '../../assets/png/bg2.png';
+import bg3 from '../../assets/png/bg3.png';
+import bg4 from '../../assets/png/bg4.png';
+
 import transaction from '../../assets/png/ArrowsLeftRight.png';
 import terms from '../../assets/png/BookOpenText.png';
 import share from '../../assets/png/share.png';
@@ -30,6 +42,7 @@ import Wallet from '../../assets/png/Wallet.png';
 import Warning from '../../assets/png/Warning.png';
 import menu from '../../assets/png/menu.png';
 import Leaderboard from '../../assets/png/Leaderboard.png';
+import language from '../../assets/png/language.png';
 import CustomTextInput from '../../components/CustomTextInput';
 import LinearGradient from 'react-native-linear-gradient';
 import {useLanguage} from '../../LanguageContext';
@@ -160,16 +173,33 @@ const ProfileScreen = ({navigation}) => {
             <Image source={gender} style={styles.imageContainer} />
             <Text style={styles.infoText}>{'male'}</Text>
           </View>
+          <View style={styles.innerInfoRow}>
+            <Image source={timer} style={styles.imageContainer} />
+            <Text style={styles.infoText}>{28}</Text>
+          </View>
+
         </View>
-        <View style={styles.infoRow}>
+        <LinearGradient
+          colors={['#AF28DC', '#AF28DC']}
+          style={styles.heartBalance}
+          start={{ x: 0, y: 0.5 }}
+          end={{ x: 1, y: 0.5 }}>
+          <View style={styles.heartInfoRow}>
+
+            <Text style={styles.heartText}>Follow</Text>
+            <Image source={Plus} style={styles.imageContainer} />
+          </View>
+
+        </LinearGradient>
+        {/* <View style={styles.infoRow}>
           <Image source={timer} style={styles.imageContainer} />
           <Text style={styles.infoText}>{28}</Text>
           <View style={styles.innerInfoRow}>
             <Image source={ring} style={styles.imageContainer} />
             <Text style={styles.infoText}>{'single'}</Text>
           </View>
-        </View>
-        <View style={styles.tabs1}>
+        </View> */}
+        {/* <View style={styles.tabs1}>
           <TouchableOpacity style={[styles.tab1, {borderRightColor: 'white'}]}>
             <LinearGradient
               colors={['#AF28DC', '#AF28DC']}
@@ -196,8 +226,55 @@ const ProfileScreen = ({navigation}) => {
               <Text style={styles.heartLabel}>Heart Balance</Text>
             </LinearGradient>
           </TouchableOpacity>
+        </View> */}
+        <View style={styles.itemContainer}>
+          <ImageBackground source={bg1} style={styles.item} resizeMode="cover">
+            <View style={styles.transparentOverlay}>
+              <Text style={styles.itemText}>My Mood</Text>
+            </View>
+
+            <Image source={smily} style={styles.itemimageContainer} />
+            <Text style={styles.itemText}>Happy</Text>
+
+
+          </ImageBackground>
+          <ImageBackground source={bg2} style={styles.item} resizeMode="cover">
+            <View style={styles.transparentOverlay}>
+              <Text style={styles.itemText}>Points Earned</Text>
+            </View>
+            <Image source={trophy} style={styles.itemimageContainer} />
+            <Text style={styles.itemText}>3200</Text>
+          </ImageBackground>
+
         </View>
         <View style={styles.itemContainer}>
+          <ImageBackground source={bg3} style={styles.item} resizeMode="cover">
+            <View style={styles.transparentOverlay}>
+              <Text style={styles.itemText}>Language</Text>
+            </View>
+            <Image source={language} style={styles.itemimageContainer} />
+            <TouchableOpacity
+              onPress={() => {
+                setSelected(!selected);
+                changeLanguage(selected ? 'en' : 'ml');
+              }}>
+              <View style={styles.languageSwitch}>
+                <Text style={styles.languageText}>
+                  {selected ? 'english' : 'malayalam'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+          </ImageBackground>
+          <ImageBackground source={bg4} style={styles.item} resizeMode="cover">
+            <View style={styles.transparentOverlay}>
+              <Text style={styles.itemText}>Gifts</Text>
+            </View>
+            <Image source={gift} style={styles.itemimageContainer} />
+            <Text style={styles.itemText}>450</Text>
+          </ImageBackground>
+        </View>
+        {/* <View style={styles.itemContainer}>
           <LinearGradient colors={['#41295A', '#2F0743']} style={styles.item}>
             <View style={styles.levelBadge}>
               <Text style={styles.levelText}>Level 1</Text>
@@ -235,7 +312,7 @@ const ProfileScreen = ({navigation}) => {
             </View>
             <Text style={styles.itemText}>Gifted</Text>
           </LinearGradient>
-        </View>
+        </View> */}
       </SafeAreaView>
     </DrawerLayoutAndroid>
   );
@@ -294,7 +371,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   tabSubtitle: {
-    fontSize: 14,
+    fontSize: 10,
     fontFamily: 'Jost',
     fontWeight: '400',
     color: 'white',
@@ -324,8 +401,15 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   imageContainer: {
-    height: height * 0.08,
+    height: 30,
     width: width * 0.07,
+    resizeMode: 'contain',
+    alignSelf: 'center',
+  },
+  itemimageContainer: {
+    marginTop: 15,
+    height: 50,
+    width: 50,
     resizeMode: 'contain',
     alignSelf: 'center',
   },
@@ -376,14 +460,15 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   heartBalance: {
-    width: '100%',
-    height: 60,
+    width: 100,
+    height: 35,
+    alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    borderTopRightRadius: 15,
-    borderBottomRightRadius: 15,
-    borderLeftColor: 'white',
-    borderWidth: 0.5,
+    borderRadius: 10,
+    // borderLeftColor: 'white',
+    // borderWidth: 0.5,
+    marginBottom: 10
   },
   heartInfoRow: {
     flexDirection: 'row',
@@ -394,8 +479,9 @@ const styles = StyleSheet.create({
   },
   heartText: {
     color: 'white',
-    marginLeft: 10,
+    marginLeft: 3,
     fontWeight: '700',
+    marginRight: 5
   },
   heartLabel: {
     color: 'white',
@@ -404,15 +490,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 30,
+    marginTop: 10,
+    width: width - 80,
+    alignSelf: 'center',
+    marginTop: 5,
+    // backgroundColor: 'red'
   },
   item: {
-    width: width / 2 - 30,
-    height: height * 0.18,
+    // width: width / 2 - 28,
+    // height: height * 0.27,
+    // width: width / 2 - 50,
+    // height: height * 0.23,
+    width: 142,
+    height: 180,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 30,
+    marginBottom: 10,
   },
   itemImage: {
     height: height * 0.06,
@@ -490,6 +584,14 @@ const styles = StyleSheet.create({
   drawerItemTitle: {
     fontSize: 16,
     color: 'white',
+  },
+  transparentOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    // backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 45
   },
 });
 
