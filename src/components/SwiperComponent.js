@@ -7,7 +7,7 @@ const SwiperComponent = ({ data }) => {
         <Swiper>
             {data.map((item, index) => (
                 <View key={index} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Image source={item.imageUrl} style={styles.image} />
+                    <Image source={item.imageUrl} resizeMode='contain' style={styles.image} />
                     <Text>{item?.description}</Text>
                     {/* Add any other content you want to display for each slide */}
                 </View>
@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '100%',
+
+
 
     },
     title: {

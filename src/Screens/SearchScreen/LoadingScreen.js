@@ -11,14 +11,15 @@ const LoadingScreen = () => {
     const [isvideocall, setisvideocall] = useState(true);
     return (
         <View style={styles.container}>
-            <View style={{ width: 120, height: 20, borderWidth: 1, borderColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 0 }}>
+            {/* <View style={{ width: 120, height: 20, borderWidth: 1, borderColor: 'white', justifyContent: 'center', alignItems: 'center', borderRadius: 0 }}> */}
                 <LottieView
-                    source={require('../../assets/greenLoadingBar.json')}
+                // source={require('../../assets/greenLoadingBar.json')}
+                source={require('../../assets/LoadingBar.json')}
                     autoPlay
                     loop
                     style={styles.lottie}
                 />
-            </View>
+            {/* </View> */}
             {/* <LottieView
                 source={require('../../assets/greenLoadingBar.json')}
                 autoPlay
