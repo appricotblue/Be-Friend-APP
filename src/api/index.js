@@ -48,7 +48,7 @@ export const getusers = async () => {
     const response = await HTTP_REQUEST.get("users/getUsers");
     return response.data;
   } catch (error) {
-    console.log(error, 'otp error')
+    console.log(error, 'user error')
     throw error;
   }
 };
