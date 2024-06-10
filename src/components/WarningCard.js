@@ -11,8 +11,8 @@ const data = [
   {id: 6, name: 'Wrong Attitude'},
 ];
 
-const WarningCard = () => {
-  const [selected, setSelected] = useState('');
+const WarningCard = ({header}) => {
+  const [selected, setSelected] = useState(false);
 
   const chunkArray = (array, chunkSize) => {
     const chunks = [];
@@ -24,14 +24,15 @@ const WarningCard = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.topicText}>Why am i getting Warning ?</Text>
+      <Text style={styles.topicText}>{header}</Text>
       <View style={styles.height20} />
 
       {chunkArray(data, 3).map((row, index) => (
         <View style={styles.rowContainer} key={index}>
           {row.map(item => (
             <View>
-              <View
+              <TouchableOpacity
+                onPress={() => setSelected(item.id)}
                 style={[
                   styles.itemContainer,
                   {
@@ -41,7 +42,7 @@ const WarningCard = () => {
                 ]}
                 key={item.index}>
                 <Text>{item.name}</Text>
-              </View>
+              </TouchableOpacity>
             </View>
           ))}
         </View>
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     minHeight: height * 0.05,
-    width: width * 0.25,
+    width: width * 0.26,
     backgroundColor: '#271926',
     borderRadius: 12,
     alignItems: 'center',

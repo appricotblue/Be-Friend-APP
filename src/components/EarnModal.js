@@ -12,6 +12,7 @@ import ModalCloseSVG from '../assets/svg/ModalCloseSVG';
 import {height, width} from '../Theme/Constants';
 import LoveSmallSVG from '../assets/svg/LoveSmallSVG';
 import EarnBGPNG from '../assets/png/EarnBGPNG.png';
+import CommonButton from './CommonButton';
 
 const EarnModal = ({visible, onClose}) => {
   const insets = useSafeAreaInsets();
@@ -48,6 +49,16 @@ const EarnModal = ({visible, onClose}) => {
               <Text style={styles.callText}>Topics</Text>
             </TouchableOpacity>
           </View>
+          <View style={{marginTop: 20}}>
+            <CommonButton
+              onPress={() => check()}
+              color={['#BF5AE0', '#A811DA']}
+              title={'Host Room'}
+              borderRadius={26}
+              width={width * 0.4}
+              texttitle={'white'}
+            />
+          </View>
         </ImageBackground>
       </View>
     </Modal>
@@ -59,7 +70,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-
   },
   modalContainer: {
     // backgroundColor: '#10000E',
