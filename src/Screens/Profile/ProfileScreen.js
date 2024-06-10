@@ -492,11 +492,13 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
-    width: width - 80,
+    width: width,
     alignSelf: 'center',
     marginTop: 5,
+
     // backgroundColor: 'red'
   },
   item: {
@@ -509,7 +511,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 10,
+    margin: 10,
+    // marginBottom: 10,
   },
   itemImage: {
     height: height * 0.06,

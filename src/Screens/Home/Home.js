@@ -234,6 +234,7 @@ import HorizontalFilter from '../../components/HorizontalFilter';
 import * as Animatable from 'react-native-animatable';
 import BottomPopupModal from '../../components/HomeBottomModal';
 import EarnModal from '../../components/EarnModal';
+import IntroModal from '../../components/IntroModal'; // Import the new IntroModal
 
 const Data = [
   {id: 1, title: 'Romance'},
@@ -280,7 +281,7 @@ const items = [
 ];
 
 const numColumns = 3;
-const currentIndex = 4;
+
 const Home = ({navigation: {navigate}}) => {
   const {t} = useLanguage();
   const flatListRef = useRef(null);
@@ -290,6 +291,7 @@ const Home = ({navigation: {navigate}}) => {
   };
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isEarnModalVisible, setEarnIsModalVisible] = useState(false);
+  const [isIntroModalVisible, setIsIntroModalVisible] = useState(true); // New state for IntroModal
   const [currentIndex, setCurrentIndex] = useState(items.length - 1);
 
   const initialScrollIndex = Math.min(
@@ -349,6 +351,7 @@ const Home = ({navigation: {navigate}}) => {
         </TouchableOpacity>
         <BottomPopupModal visible={isModalVisible} onClose={toggleModal} />
         <EarnModal visible={isEarnModalVisible} onClose={toggleEarnModal} />
+        <IntroModal visible={isIntroModalVisible} onClose={() => setIsIntroModalVisible(false)} /> 
       </ImageBackground>
     </SafeAreaView>
   );
