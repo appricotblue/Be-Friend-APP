@@ -6,9 +6,11 @@ import { height, width } from '../../Theme/Constants';
 import Colors from '../../Theme/Colors';
 import CommonButton from '../../components/CommonButton';
 import TextInputBox from '../../components/TextInputBox';
+import { signup } from '../../api';
+import Local from '../../Storage/Local';
 
 const SignUpScreen = ({ navigation }) => {
-    const [email, changeemail] = useState('');
+    const [username, changeusername] = useState('');
     const [checkEmail, changecheckEmail] = useState('');
     const [language, changelanguage] = useState('');
     const [checklanguage, changechecklanguage] = useState('');
@@ -24,23 +26,25 @@ const SignUpScreen = ({ navigation }) => {
     const [dateOfBirth, setDateOfBirth] = useState('');
     const [checkdateOfBirth, changesetDateOfBirth] = useState('');
     const [showPicker, setShowPicker] = useState(false);
+    const [gendername, setgendername] = useState('');
+
 
     const onNextPress = () => {
-        if (email === '') {
-            changecheckEmail('Please enter username'); // Set error message         
+        if (username === '') {
+            changecheckEmail('Please enter username');        
         }
         else if (dateOfBirth === '') {
-            changesetDateOfBirth('Please select dob'); // Set error message         
+            changesetDateOfBirth('Please select dob');         
         }
         else if (language === '') {
-            changechecklanguage('Please select language'); // Set error message         
+            changechecklanguage('Please select language');         
         }
         else if (place === '') {
-            changecheckplace('Please select place'); // Set error message         
+            changecheckplace('Please select place');            
         }
         else {
-            // navigation.replace('home');
-            navigation.replace('AvtarselectionScreen');
+            handlesignup();
+            // navigation.replace('AvtarselectionScreen');
             // local.storeLogin(true);
         }
 
@@ -60,6 +64,40 @@ const SignUpScreen = ({ navigation }) => {
         setShowPicker(true);
     };
 
+
+    const handlesignup = async () => {
+        try {
+            // const response = await signup(username, dateOfBirth, language, place, gender, avatar, userid);
+            const response = await signup(username, dateOfBirth, language, place, gendername, "https://img.lovepik.com/element/40128/7461.png_1200.png", "665af7b8f324154d973d6a48");
+            // const response = await login('userTwo', 'userTwo@123');
+            console.log(response, 'signup api response')
+            // await Local.storeLogin('token', response.token);
+            // await Local.storeUserId('UserId', `${response.user?.id}`);
+
+
+            if (response.message = "user details created Successfully") {
+
+                // await Local.storeLogin('token', response.token);
+                // await Local.storeUserId('UserId', `${response.user?.id}`);
+
+                navigation.replace('home');
+            } else {
+                console.log('Error during login:',);
+                // setError(response.data.message);
+            }
+        } catch (error) {
+            // Alert(error)
+            // console.error('Error during login:hwre', error?.message);
+            if (error.response && error.response.data && error.response.data.message) {
+                Alert.alert('Error', error.response.data.message);
+            } else {
+                Alert.alert('Error', 'An error occurred during login.');
+            }
+
+        }
+    };
+
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#10000E' }}>
             <ScrollView >
@@ -72,11 +110,11 @@ const SignUpScreen = ({ navigation }) => {
                     </View>
 
                     <TextInputBox
-                        value={email}
+                            value={username}
                         isNumber={false}
                         errorText={checkEmail}
                         onChangeText={text => {
-                            changeemail(text);
+                            changeusername(text);
                             changecheckEmail('');
                         }}
                         placeholder={'Username'}
@@ -127,7 +165,7 @@ const SignUpScreen = ({ navigation }) => {
                             <View style={styles.row1} key={item.id}>
                                 <TouchableOpacity
                                     style={styles.radioBtnOuter}
-                                    onPress={() => setSelected(item.id)}>
+                                    onPress={() => { setSelected(item.id), setgendername(item.name) }}>
                                     <View
                                         style={[
                                             styles.innerRadio,

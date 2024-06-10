@@ -11,7 +11,8 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Alert
 } from 'react-native';
 
 import TextInputBox from '../../components/TextInputBox';
@@ -25,13 +26,18 @@ import { height, width } from '../../Theme/Constants';
 import FunZone from '../../assets/png/Mobile.png';
 import CustomTextInput from '../../components/CustomTextInput';
 import CountryPicker from '../../components/CountryPicker';
+import { login } from '../../api';
+import Local from '../../Storage/Local';
+import { useRoute } from '@react-navigation/native'; 
 
 var windowWidth = Dimensions.get('window').width; // full width
 var windowHeight = Dimensions.get('window').height; // full height
 
 const LoginScreen = props => {
   const navigation = useNavigation();
-  const [email, changeemail] = useState('');
+  const route = useRoute();
+  
+  const [mobileNumber, changeemail] = useState('');
   const [checkEmail, changecheckEmail] = useState('');
   const [checkPassword, changecheckPassword] = useState('');
   const [password, changepassword] = useState('');
@@ -58,16 +64,53 @@ const LoginScreen = props => {
   };
 
   const isValidate = async () => {
-    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email format
+    const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (email === '') {
-      changecheckEmail('Enter Mobile no'); // Set error message
-    } else if (selectedCountryId === '') {
-      changecheckPassword('code'); // Set error message
+    if (mobileNumber === '') {
+      changecheckEmail('Enter Mobile no');
+    }
+    else if (mobileNumber.length != 10) {
+      changecheckEmail('Enter valid Mobile no');
+    }
+    else if (selectedCountryId === '') {
+      changecheckPassword('code');
     } else {
-      navigation.replace('OtpScreen');
+      handleLogin();
+      // navigation.replace('OtpScreen');
     }
   };
+
+  const handleLogin = async () => {
+    try {
+      const response = await login(mobileNumber);
+      // const response = await login('userTwo', 'userTwo@123');
+      console.log(response, 'login api response')
+      // await Local.storeLogin('token', response.token);
+      // await Local.storeUserId('UserId', `${response.user?.id}`);
+
+
+      if (response.message = "OTP sent successfully") {
+
+  // await Local.storeLogin('token', response.token);
+  // await Local.storeUserId('UserId', `${response.user?.id}`);
+
+        navigation.replace('OtpScreen', { mobileno: mobileNumber });
+      } else {
+        console.log('Error during login:',);
+        // setError(response.data.message);
+      }
+    } catch (error) {
+      // Alert(error)
+      // console.error('Error during login:hwre', error?.message);
+      if (error.response && error.response.data && error.response.data.message) {
+        Alert.alert('Error', error.response.data.message);
+      } else {
+        Alert.alert('Error', 'An error occurred during login.');
+      }
+
+    }
+  };
+
 
   const clearAll = async () => {
     changeemail('');
@@ -105,7 +148,7 @@ const LoginScreen = props => {
           <View style={{ flexDirection: 'row', width: width }}>
             <CountryPicker title="Country" onSelectCountry={handleSelectCountry} />
             <TextInputBox
-              value={email}
+              value={mobileNumber}
               isNumber={true}
               errorText={checkEmail}
               onChangeText={text => {

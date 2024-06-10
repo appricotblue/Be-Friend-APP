@@ -12,7 +12,8 @@ import {
     ActivityIndicator,
     ImageBackground,
     TouchableWithoutFeedback,
-    Keyboard
+    Keyboard,
+    Alert
 } from 'react-native';
 
 import TextInputBox from '../../components/TextInputBox';
@@ -26,76 +27,86 @@ import local from '../../Storage/Local';
 import { height, width } from '../../Theme/Constants';
 import FunZone from '../../assets/png/key.png';
 import CustomTextInput from '../../components/CustomTextInput';
+import { useRoute } from '@react-navigation/native';
+import { verifyotp } from '../../api';
+import Local from '../../Storage/Local';
 
 var windowWidth = Dimensions.get('window').width; //full width
 var windowHeight = Dimensions.get('window').height; //full height
 
 const OtpScreen = props => {
     const navigation = useNavigation();
-    const [email, changeemail] = useState('');
+    const [otp, changeotp] = useState('');
     const [checkEmail, changecheckEmail] = useState('');
     const [checkPassword, changecheckPassword] = useState('');
     const [password, changepassword] = useState('');
     const [isLogin, changeIsLogin] = useState(false);
+    const route = useRoute();
+    const { mobileno } = route.params;
 
-    const getEmail = async () => {
-        try {
-            const value = await AsyncStorage.getItem('email');
-            if (value !== null) {
-                changecheckEmail(value);
-            }
-            const paasword = await AsyncStorage.getItem('password');
-            if (paasword !== null) {
-                changecheckPassword(paasword);
-            }
-        } catch (e) {
-            return null;
-            // error reading value
-        }
-    };
-
-    // const isvalidate = async () => {
-    //   if (email == '') {
-    //     alert('Please enter Email id');
-    //   } else if (password == '') {
-    //     alert('Please enter password');
-    //   }  else {
-    //     navigation.replace('Home')
-    //     // local.storeLogin(true);
-    //   }
-    // };
 
     const isValidate = async () => {
         const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
 
-        if (email === '') {
+        if (otp === '') {
             changecheckEmail('Please enter OTP'); // Set error message
           
         }
         else {
-            // navigation.replace('home');
+            handleOtp()
             navigation.replace('SignUpScreen');
             // local.storeLogin(true);
         }
     };
 
+    const handleOtp = async () => {
+        try {
+            const response = await verifyotp(mobileno, otp);
+            // const response = await login('userTwo', 'userTwo@123');
+            console.log(response, 'login api response')
+            // await Local.storeLogin('token', response.token);
+            // await Local.storeUserId('UserId', `${response.user?.id}`);
 
-    const clearAll = async () => {
-        changeemail('');
-        changepassword('');
-    };
-    useEffect(() => {
-        AsyncStorage.getItem('isLogin', value => {
-            if (value != null || value != undefined) {
-                navigation.reset('Home');
+
+            if (response.message = "OTP sent successfully") {
+
+                // await Local.storeLogin('token', response.token);
+                // await Local.storeUserId('UserId', `${response.user?.id}`);
+
+                // navigation.replace('OtpScreen', { mobileno: mobileNumber });
             } else {
-                changeIsLogin(false);
+                console.log('Error during login:',);
+                // setError(response.data.message);
             }
-        });
+        } catch (error) {
+            // Alert(error)
+            // console.error('Error during login:hwre', error?.message);
+            if (error.response && error.response.data && error.response.data.message) {
+                Alert.alert('Error', error.response.data.message);
+            } else {
+                Alert.alert('Error', 'An error occurred during login.');
+            }
+
+        }
+    };
+
+    // const clearAll = async () => {
+    //     changeemail('');
+    //     changepassword('');
+    // };
+    useEffect(() => {
+        console.log(mobileno)
+        // AsyncStorage.getItem('isLogin', value => {
+        //     if (value != null || value != undefined) {
+        //         navigation.reset('Home');
+        //     } else {
+        //         changeIsLogin(false);
+        //     }
+        // });
     }, []);
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            changeemail('');
+            changeotp('');
             changepassword('');
             //Put your Data loading function here instead of my loadData()
         });
@@ -114,17 +125,17 @@ const OtpScreen = props => {
                 {/* <ImageBackground source={FunZone} resizeMode="cover" style={styles.image}> */}
                 <View style={{ width: width - 60, marginTop: 30, marginBottom: 40, }}>
                     <Text style={styles.TileTxt}>{"Enter the code received "}</Text>
-                    <Text style={styles.subTileTxt}>The code has been sent to  <Text style={{ color: '#A811DA' }}>+91 94633 33663</Text></Text>
+                        <Text style={styles.subTileTxt}>The code has been sent to  <Text style={{ color: '#A811DA' }}>+91 {mobileno}</Text></Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', width: '80%' }}>
 
                     <TextInputBox
-                        value={email}
+                            value={otp}
                         isNumber={true}
                         errorText={checkEmail}
                         onChangeText={text => {
-                            changeemail(text);
+                            changeotp(text);
                             changecheckEmail('')
                         }}
                         placeholder={'otp'}
