@@ -29,7 +29,7 @@ const WarningScreen = ({navigation}) => {
       <Text style={styles.warningCountText}>5 Warnings</Text>
       <View style={styles.height20} />
       <View style={styles.height20} />
-      <WarningCard />
+      <WarningCard header={'Why am I getting warnings ?'} />
     </View>
   );
 };
