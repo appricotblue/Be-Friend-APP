@@ -3,9 +3,10 @@ import React, {useState} from 'react';
 import {height, width} from '../Theme/Constants';
 import * as Animatable from 'react-native-animatable';
 
-const HorizontalFilter = ({data}) => {
+const HorizontalFilter = ({ data, onPressItem }) => {
   const [selected, setSelected] = useState('');
   console.log(selected);
+
   const renderItem = ({item, index}) => {
     return (
       <Animatable.View animation="flipInY" duration={1000} delay={200}>
@@ -13,16 +14,16 @@ const HorizontalFilter = ({data}) => {
           <TouchableOpacity
             style={[
               Styles.container,
-              { backgroundColor: selected == index ? '#A662B6' : item?.image ? 'rgba(0, 0, 5, 0.5)' : 'black' },
+              { backgroundColor: selected == item._id ? '#A662B6' : item?.image ? 'rgba(0, 0, 5, 0.5)' : 'black' },
             ]}
-            onPress={() => setSelected(index)}>
+            onPress={() => { onPressItem(item), setSelected(item._id) }}>
 
             {item?.image && (
               <Image source={item?.image} resizeMode='contain' style={Styles.rankimage} />
             )}
 
-            <Text style={{color: selected == index ? 'black' : '#A662B6'}}>
-              {item.title}
+            <Text style={{ color: selected == item._id ? 'black' : '#A662B6' }}>
+              {item.name}
             </Text>
           </TouchableOpacity>
         </View>

@@ -18,10 +18,11 @@ export const login = async (mobileNumber) => {
   }
 };
 
-export const verifyotp = async (mobileNumber, Otp) => {
+export const verifyotp = async (mobileNumber, otp) => {
+  console.log(mobileNumber, otp, 'otpptt')
   try {
 
-    const response = await HTTP_REQUEST.post("users/userVerifyOTP", { mobileNumber, Otp });
+    const response = await HTTP_REQUEST.post("users/userVerifyOTP", { mobileNumber, otp });
     return response.data;
   } catch (error) {
     console.log(error, 'otp error')
@@ -53,6 +54,27 @@ export const getusers = async () => {
   }
 };
 
+export const getavtar = async () => {
+  try {
+
+    const response = await HTTP_REQUEST.get("users/getAvatar");
+    return response.data;
+  } catch (error) {
+    console.log(error, 'user error')
+    throw error;
+  }
+};
+
+export const getallcategories = async () => {
+  try {
+
+    const response = await HTTP_REQUEST.get("users/getAllCategories");
+    return response.data;
+  } catch (error) {
+    console.log(error, 'user error')
+    throw error;
+  }
+};
 
 export const trial = async (PAYLOAD) =>
   HTTP_REQUEST.post("/user-home-screen/", PAYLOAD);

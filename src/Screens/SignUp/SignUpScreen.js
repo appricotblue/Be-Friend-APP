@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, SafeAreaView } from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import grp1 from '../../assets/png/welcomelogin.png';
@@ -8,8 +8,11 @@ import CommonButton from '../../components/CommonButton';
 import TextInputBox from '../../components/TextInputBox';
 import { signup } from '../../api';
 import Local from '../../Storage/Local';
+import { useIsFocused } from '@react-navigation/native';
 
 const SignUpScreen = ({ navigation }) => {
+
+    const isFocused = useIsFocused();
     const [username, changeusername] = useState('');
     const [checkEmail, changecheckEmail] = useState('');
     const [language, changelanguage] = useState('');
@@ -27,7 +30,32 @@ const SignUpScreen = ({ navigation }) => {
     const [checkdateOfBirth, changesetDateOfBirth] = useState('');
     const [showPicker, setShowPicker] = useState(false);
     const [gendername, setgendername] = useState('');
+    const [UserId, setUserId] = useState(null);
 
+
+
+    const fetchData = async () => {
+        if (isFocused) { // Check if the screen is focused
+            console.log('Home screen is focused',);
+            try {
+
+                const userid = await Local.getUserId();
+                setUserId(userid);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+    };
+
+
+    useEffect(() => {
+
+        fetchData()
+
+
+
+    }, []);
 
     const onNextPress = () => {
         if (username === '') {
@@ -43,7 +71,11 @@ const SignUpScreen = ({ navigation }) => {
             changecheckplace('Please select place');            
         }
         else {
-            handlesignup();
+            navigation.navigate('AvtarselectionScreen', {
+                data:
+                    { username: username, dateOfBirth: dateOfBirth, language: language, place: place, gendername: gendername, UserId: UserId }
+            });
+            // handlesignup();
             // navigation.replace('AvtarselectionScreen');
             // local.storeLogin(true);
         }
@@ -68,19 +100,13 @@ const SignUpScreen = ({ navigation }) => {
     const handlesignup = async () => {
         try {
             // const response = await signup(username, dateOfBirth, language, place, gender, avatar, userid);
-            const response = await signup(username, dateOfBirth, language, place, gendername, "https://img.lovepik.com/element/40128/7461.png_1200.png", "665af7b8f324154d973d6a48");
-            // const response = await login('userTwo', 'userTwo@123');
+            const response = await signup(username, dateOfBirth, language, place, gendername, "https://img.lovepik.com/element/40128/7461.png_1200.png", UserId);
+
             console.log(response, 'signup api response')
-            // await Local.storeLogin('token', response.token);
-            // await Local.storeUserId('UserId', `${response.user?.id}`);
-
-
             if (response.message = "user details created Successfully") {
 
-                // await Local.storeLogin('token', response.token);
-                // await Local.storeUserId('UserId', `${response.user?.id}`);
-
-                navigation.replace('home');
+              // navigation.replace('home');
+              navigation.replace('AvtarselectionScreen');
             } else {
                 console.log('Error during login:',);
                 // setError(response.data.message);

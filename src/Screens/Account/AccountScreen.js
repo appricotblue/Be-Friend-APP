@@ -4,6 +4,7 @@ import {height, width} from '../../Theme/Constants';
 import BackArrowSVG from '../../assets/svg/BackArrowSVG';
 import DeleteSVG from '../../assets/svg/DeleteSVG';
 import LogoutSVG from '../../assets/svg/LogoutSVG';
+import Local from '../../Storage/Local';
 
 const AccountScreen = ({navigation}) => {
   return (
@@ -21,7 +22,12 @@ const AccountScreen = ({navigation}) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.itemContainer}
-        onPress={() => navigation.navigate('friendrequest')}>
+        // onPress={() => navigation.navigate('friendrequest')}
+        onPress={ async() => {
+          navigation.navigate('LoginScreen');
+          await Local.storeUserId('UserId', '');
+        }}
+        >
         <LogoutSVG />
         <Text style={styles.textStyle}>Log Out</Text>
       </TouchableOpacity>

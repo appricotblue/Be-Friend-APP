@@ -20,7 +20,7 @@ const images = [
     // Add more images as needed
 ];
 
-const ImageGrid = () => {
+const ImageGrid = ({ images, onPressItem }) => {
     const [selectedImageId, setSelectedImageId] = useState(null);
 
     const selectImage = (id) => {
@@ -28,12 +28,12 @@ const ImageGrid = () => {
     };
 
     const renderItem = ({ item }) => {
-        const isSelected = selectedImageId === item.id;
+        const isSelected = selectedImageId === item._id;
 
         return (
-            <TouchableOpacity onPress={() => selectImage(item.id)}>
+            <TouchableOpacity onPress={() => { onPressItem(item), selectImage(item._id) }}>
                 <View style={styles.imageContainer}>
-                    <Image source={ProfilePNG} style={styles.image} />
+                    <Image source={{ uri: item.image }} style={styles.image} />
                     {isSelected && (
                         <View style={styles.selectedOverlay}>
                             <Image source={TickPNG} style={styles.checkIcon} />

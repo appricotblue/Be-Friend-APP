@@ -8,6 +8,7 @@ import {
   FlatList,
   View,
   Image,
+  Alert
 } from 'react-native';
 import { useLanguage } from '../../LanguageContext';
 import MainHeader from '../../components/MainHeader';
@@ -27,7 +28,7 @@ import EarnModal from '../../components/EarnModal';
 import BlockModal from '../../components/BlockModal';
 import IntroModal from '../../components/IntroModal';
 import EarnMoneyModal from '../../components/EarnMoneyModal';
-import { getusers } from '../../api';
+import { getusers, getallcategories } from '../../api';
 import Local from '../../Storage/Local';
 import PhonePNG from '../../assets/png/PhonePNG.png';
 import VideoPNG from '../../assets/png/VideoPNG.png';
@@ -86,41 +87,49 @@ const Home = ({ navigation: { navigate } }) => {
   };
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userdata, setuserdata] = useState([]);
+  const [catdata, setcatdata] = useState([]);
+  const [catId, setcatId] = useState();
   const [isEarnModalVisible, setEarnIsModalVisible] = useState(false);
-  const [isIntroModalVisible, setIsIntroModalVisible] = useState(true);
+  const [isIntroModalVisible, setIsIntroModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(items.length - 1);
 
   useEffect(() => {
     Getusers();
-    // AsyncStorage.getItem('isLogin', value => {
-    //   if (value != null || value != undefined) {
-    //     navigation.reset('Home');
-    //   } else {
-    //     changeIsLogin(false);
-    //   }
-    // });
+    Getallcategories()
   }, []);
+
+  const Getallcategories = async () => {
+    try {
+      const response = await getallcategories();
+      console.log(response, 'cat api response')
+      setcatdata(response)
+      if (response.message = "OTP sent successfully") {
+
+      } else {
+        console.log('Error during login:',);
+      }
+    } catch (error) {
+
+    }
+  };
+
 
   const Getusers = async () => {
     try {
       const response = await getusers();
       // const response = await login('userTwo', 'userTwo@123');
       console.log(response[0].profile.avatar, 'users api response')
+      console.log(response, 'users api response')
       setuserdata(response)
-      // await Local.storeLogin('token', response.token);
-      // await Local.storeUserId('UserId', `${response.user?.id}`);
-
 
       if (response.message = "OTP sent successfully") {
 
 
       } else {
         console.log('Error during login:',);
-        // setError(response.data.message);
+
       }
     } catch (error) {
-      // Alert(error)
-      // console.error('Error during login:hwre', error?.message);
       if (error.response && error.response.data && error.response.data.message) {
         Alert.alert('Error', error.response.data.message);
       } else {
@@ -154,8 +163,8 @@ const Home = ({ navigation: { navigate } }) => {
         <TouchableOpacity style={styles.FlatlistContainer}>
           <View style={{ position: 'relative', alignItems: 'center' }}>
             <Image
-              source={{ uri: item?.profile?.avatar }}
-              style={{ height: height * 0.14, width: width * 0.25, borderRadius: 50 }}
+              source={{ uri: item?.profile?.avatar ? item?.profile?.avatar : 'https://img.lovepik.com/element/40128/7461.png_1200.png' }}
+              style={{ height: 80, width: 80, borderRadius: 50 }}
             />
             <View style={[styles.icon, styles.callingIcon]}>
               <Image
@@ -172,6 +181,8 @@ const Home = ({ navigation: { navigate } }) => {
             </View>
 
           </View>
+
+          <Text style={{ color: 'white' }}>#{item.username}</Text>
         </TouchableOpacity>
       </View>
     </Animatable.View>
@@ -205,7 +216,7 @@ const Home = ({ navigation: { navigate } }) => {
         <View>
           <Image source={PrivatePNG} style={styles.svgStle}></Image>
         </View>
-        <HorizontalFilter data={Data} />
+        <HorizontalFilter data={catdata} onPressItem={(item) => setcatId(item._id)} />
 
         <FlatList
           ref={flatListRef}
@@ -298,8 +309,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
-    width: 40,
-    height: 40
+    width: 30,
+    height: 30
   },
   videoIcon: {
     right: -20, // Adjust the positioning as needed
@@ -309,8 +320,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ED6D6D',
-    width: 40,
-    height: 40
+    width: 30,
+    height: 30
   },
 
 });

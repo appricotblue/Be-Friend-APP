@@ -54,7 +54,7 @@ const OtpScreen = props => {
         }
         else {
             handleOtp()
-            navigation.replace('SignUpScreen');
+            // navigation.replace('SignUpScreen');
             // local.storeLogin(true);
         }
     };
@@ -64,15 +64,11 @@ const OtpScreen = props => {
             const response = await verifyotp(mobileno, otp);
             // const response = await login('userTwo', 'userTwo@123');
             console.log(response, 'login api response')
-            // await Local.storeLogin('token', response.token);
-            // await Local.storeUserId('UserId', `${response.user?.id}`);
-
-
-            if (response.message = "OTP sent successfully") {
+            if (response.message = "OTP verified successfully") {
 
                 // await Local.storeLogin('token', response.token);
-                // await Local.storeUserId('UserId', `${response.user?.id}`);
-
+                await Local.storeUserId('UserId', `${response.user?._id}`);
+                navigation.replace('SignUpScreen');
                 // navigation.replace('OtpScreen', { mobileno: mobileNumber });
             } else {
                 console.log('Error during login:',);
