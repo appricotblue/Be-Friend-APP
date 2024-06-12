@@ -76,5 +76,38 @@ export const getallcategories = async () => {
   }
 };
 
+export const getProfile = async (userid) => {
+  console.log(userid, 'here profile id ')
+  try {
+
+    const response = await HTTP_REQUEST.get(`users/getProfile/${userid}`);
+    return response.data;
+  } catch (error) {
+    console.log(error, 'user error')
+    throw error;
+  }
+};
+export const updateProfile = async (username, dateOfBirth, language, place, gender, avatar, userid) => {
+  console.log(userid, 'here profile id ')
+  try {
+    const response = await HTTP_REQUEST.put(`users/updateUser/${userid}`, { username, dateOfBirth, language, place, gender, avatar });
+    return response.data;
+  } catch (error) {
+    console.log(error, 'user error')
+    throw error;
+  }
+};
+
+export const getHomebanner = async () => {
+  try {
+
+    const response = await HTTP_REQUEST.get("users/getAllBanner");
+    return response.data;
+  } catch (error) {
+    console.log(error, 'user error')
+    throw error;
+  }
+};
+
 export const trial = async (PAYLOAD) =>
   HTTP_REQUEST.post("/user-home-screen/", PAYLOAD);

@@ -32,11 +32,14 @@ import SwiperComponent from '../../components/SwiperComponent';
 import HorizontalList from '../../components/HorizontalList';
 import ImageBackgroundItem from '../../components/ImageBackgroundItem';
 import {ScrollView} from 'react-native-gesture-handler';
+import { getHomebanner } from '../../api';
+import Local from '../../Storage/Local';
 
 
 const Reels = ({navigation: {navigate}}) => {
   const {t, changeLanguage} = useLanguage();
   const flatListRef = useRef(null);
+  const [bannerdata, setbannerdata] = useState([]);
   
   const swiperdata = [
     {id: '1', title: 'Item 1', imageUrl: HomeBanner},
@@ -64,6 +67,29 @@ const Reels = ({navigation: {navigate}}) => {
     navigate('cart');
   };
 
+
+  useEffect(() => {
+    GetBanner();
+
+  }, []);
+
+  const onProfilePress = () => {
+    navigate('profile');
+  };
+  const GetBanner = async () => {
+    try {
+      const response = await getHomebanner();
+      console.log(response, 'homebanner api response')
+      setbannerdata(response)
+      if (response.message = "OTP sent successfully") {
+
+      } else {
+        console.log('Error during login:',);
+      }
+    } catch (error) {
+
+    }
+  };
 
   const renderItem2 = ({ item, index }) => (
     <Animatable.View
@@ -93,10 +119,10 @@ const Reels = ({navigation: {navigate}}) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <ImageBackground source={HomeBgPNG} style={styles.bgStyle}> */}
-      <MainHeader />
+      <MainHeader onProfilePress={() => onProfilePress()} />
       <ScrollView>
         <View style={{ height: 180, marginTop: 1, width: width }}>
-          <SwiperComponent data={swiperdata} />
+          <SwiperComponent data={bannerdata} />
         </View>
         <View
           style={{

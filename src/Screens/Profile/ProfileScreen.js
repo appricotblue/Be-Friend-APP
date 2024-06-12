@@ -6,13 +6,15 @@ import {
   TouchableOpacity,
   ImageBackground,
   DrawerLayoutAndroid,
-  SafeAreaView
+  SafeAreaView,
+  Alert
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import BackArrowSVG from '../../assets/svg/BackArrowSVG';
 import {height, width} from '../../Theme/Constants';
 import ProfilePNG from '../../assets/png/ProfilePNG.png';
 import ring from '../../assets/png/ring.png';
+import money from '../../assets/png/money.png';
 import map from '../../assets/png/MapPin.png';
 import timer from '../../assets/png/Hourglass.png';
 import gender from '../../assets/png/GenderMale.png';
@@ -46,6 +48,9 @@ import language from '../../assets/png/language.png';
 import CustomTextInput from '../../components/CustomTextInput';
 import LinearGradient from 'react-native-linear-gradient';
 import {useLanguage} from '../../LanguageContext';
+import { getProfile } from '../../api';
+import Local from '../../Storage/Local';
+import { useIsFocused } from '@react-navigation/native';
 // import { useNavigation } from '@react-navigation/native';
 
 const drawerItems = [
@@ -61,14 +66,60 @@ const drawerItems = [
 ];
 
 const ProfileScreen = ({navigation}) => {
+  const isFocused = useIsFocused();
   const {t, changeLanguage} = useLanguage();
   const [selected, setSelected] = useState(true);
   const drawer = useRef(null);
+  const [UserId, setUserId] = useState(null);
+  const [userdata, setuserdata] = useState('');
   // const navigation = useNavigation();
 
+  const fetchData = async () => {
+    if (isFocused) { // Check if the screen is focused
+      console.log('Profile screen is focused',);
+      try {
+
+        const userid = await Local.getUserId();
+        setUserId(userid);
+        GetProfile(userid)
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+  };
+
+
   useEffect(() => {
-    // console.log(t)
+    fetchData()
   }, []);
+
+
+  const GetProfile = async (userid) => {
+    try {
+      const response = await getProfile(userid);
+      // const response = await login('userTwo', 'userTwo@123');
+      console.log(response, 'users api response')
+
+      setuserdata(response.userProfile)
+
+      if (response.message = "OTP sent successfully") {
+
+
+      } else {
+        console.log('Error during login:',);
+
+      }
+    } catch (error) {
+      console.log(error, 'here error')
+      if (error.response && error.response.data && error.response.data.message) {
+        Alert.alert('Error', error.response.data.message);
+      } else {
+        Alert.alert('Error', 'An error occurred during Profile.');
+      }
+
+    }
+  };
 
   const renderDrawerContent = () => (
     <View style={styles.drawerContainer}>
@@ -100,7 +151,7 @@ const ProfileScreen = ({navigation}) => {
         navigation.replace('home');
         break;
       case 'Edit Profile':
-        navigation.replace('Editprofile');
+        navigation.replace('Editprofile', { data: userdata });
         break;
       case 'Transactions':
         navigation.replace('transactions');
@@ -154,8 +205,11 @@ const ProfileScreen = ({navigation}) => {
           </TouchableOpacity>
           <View style={styles.profilePictureContainer}>
             <TouchableOpacity style={styles.outerview}>
-              <ImageBackground
-                source={ProfilePNG}
+              <Image
+                // source={{ uri: userdata.avatar }}
+                source={{ uri: userdata.avatar ? userdata.avatar : 'https://img.lovepik.com/element/40128/7461.png_1200.png' }}
+
+              // source={{ uri: 'https://img.lovepik.com/element/40128/7461.png_1200.png' }}
                 resizeMode="cover"
                 style={styles.statusUploadBackground}
               />
@@ -171,10 +225,10 @@ const ProfileScreen = ({navigation}) => {
         <Text style={styles.profileName}>{'Vishnu'}</Text>
         <View style={styles.infoRow}>
           <Image source={map} style={styles.imageContainer} />
-          <Text style={styles.infoText}>{'kerala'}</Text>
+          <Text style={styles.infoText}>{userdata?.place}</Text>
           <View style={styles.innerInfoRow}>
             <Image source={gender} style={styles.imageContainer} />
-            <Text style={styles.infoText}>{'male'}</Text>
+            <Text style={styles.infoText}>{userdata.gender}</Text>
           </View>
           <View style={styles.innerInfoRow}>
             <Image source={timer} style={styles.imageContainer} />
@@ -182,7 +236,7 @@ const ProfileScreen = ({navigation}) => {
           </View>
 
         </View>
-        <LinearGradient
+        {/* <LinearGradient
           colors={['#AF28DC', '#AF28DC']}
           style={styles.heartBalance}
           start={{ x: 0, y: 0.5 }}
@@ -193,7 +247,7 @@ const ProfileScreen = ({navigation}) => {
             <Image source={Plus} style={styles.imageContainer} />
           </View>
 
-        </LinearGradient>
+        </LinearGradient> */}
         {/* <View style={styles.infoRow}>
           <Image source={timer} style={styles.imageContainer} />
           <Text style={styles.infoText}>{28}</Text>
@@ -202,7 +256,7 @@ const ProfileScreen = ({navigation}) => {
             <Text style={styles.infoText}>{'single'}</Text>
           </View>
         </View> */}
-        {/* <View style={styles.tabs1}>
+        <View style={styles.tabs1}>
           <TouchableOpacity style={[styles.tab1, {borderRightColor: 'white'}]}>
             <LinearGradient
               colors={['#AF28DC', '#AF28DC']}
@@ -229,7 +283,7 @@ const ProfileScreen = ({navigation}) => {
               <Text style={styles.heartLabel}>Heart Balance</Text>
             </LinearGradient>
           </TouchableOpacity>
-        </View> */}
+        </View>
         <View style={styles.itemContainer}>
           <ImageBackground source={bg1} style={styles.item} resizeMode="cover">
             <View style={styles.transparentOverlay}>
@@ -381,8 +435,10 @@ const styles = StyleSheet.create({
   },
   profilePictureContainer: {
     width: width / 4,
+    // height: 170,
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'red'
   },
   profileName: {
     color: 'white',
@@ -463,16 +519,26 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   heartBalance: {
-    width: 100,
-    height: 35,
-    alignSelf: 'center',
+    width: '100%',
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    // borderLeftColor: 'white',
-    // borderWidth: 0.5,
-    marginBottom: 10
+    borderTopRightRadius: 15,
+    borderBottomRightRadius: 15,
+    borderRightColor: 'white',
+    borderWidth: 0.5,
   },
+  // heartBalance: {
+  //   width: 100,
+  //   height: 35,
+  //   alignSelf: 'center',
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   borderRadius: 10,
+  //   // borderLeftColor: 'white',
+  //   // borderWidth: 0.5,
+  //   marginBottom: 10
+  // },
   heartInfoRow: {
     flexDirection: 'row',
     height: 30,
@@ -567,7 +633,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
 
-    borderRadius: 45, // half of height/width for perfect circle
+    borderRadius: 50, 
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.3)', // Adjust opacity or color as needed
@@ -599,6 +665,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 45
   },
+  outerview: {
+    backgroundColor: '#10000E'
+  }
 });
 
 export default ProfileScreen;

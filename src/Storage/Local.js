@@ -37,11 +37,32 @@ const getUserId = async () => {
   }
 };
 
+const storEexistuser = async (key, value) => {
+  try {
+    await AsyncStorage.setItem(key, value);
+  } catch (error) {
+    console.error('Error storing existuser:', error);
+    // Handle error if necessary
+  }
+};
+
+const getEexistuser = async () => {
+  try {
+    const existuser = await AsyncStorage.getItem('existuser');
+    return existuser;
+  } catch (error) {
+    console.error('Error retrieving login token:', error);
+    return null;
+  }
+};
+
 const Local = {
   storeLogin,
   getStoredToken,
   storeUserId,
-  getUserId
+  getUserId,
+  storEexistuser,
+  getEexistuser
 };
 
 export default Local;

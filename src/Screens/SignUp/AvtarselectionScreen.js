@@ -51,7 +51,8 @@ const AvtarselectionScreen = ({ navigation }) => {
         if (vatardata != '') {
             try {
                 // const response = await signup(username, dateOfBirth, language, place, gender, avatar, userid);
-                const response = await signup(data.username, data.dateOfBirth, data.language, data.place, data.gendername, vatardata, data.UserId);
+                // const response = await signup(data.username, data.dateOfBirth, data.language, data.place, data.gendername, vatardata, data.UserId);
+                const response = await signup(data.username, data.dateOfBirth, 'English', data.place, data.gendername, vatardata, data.UserId);
 
                 console.log(response, 'signup api response')
                 if (response.message = "user details created Successfully") {

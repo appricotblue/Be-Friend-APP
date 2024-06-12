@@ -30,6 +30,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import { useRoute } from '@react-navigation/native';
 import { verifyotp } from '../../api';
 import Local from '../../Storage/Local';
+// import { getEexistuser } from '../../Storage/Local';
 
 var windowWidth = Dimensions.get('window').width; //full width
 var windowHeight = Dimensions.get('window').height; //full height
@@ -46,11 +47,11 @@ const OtpScreen = props => {
 
 
     const isValidate = async () => {
-        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+        const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (otp === '') {
             changecheckEmail('Please enter OTP'); // Set error message
-          
+
         }
         else {
             handleOtp()
@@ -63,25 +64,52 @@ const OtpScreen = props => {
         try {
             const response = await verifyotp(mobileno, otp);
             // const response = await login('userTwo', 'userTwo@123');
+            console.log(response.isExistingUser, 'login api response')
             console.log(response, 'login api response')
-            if (response.message = "OTP verified successfully") {
-
-                // await Local.storeLogin('token', response.token);
-                await Local.storeUserId('UserId', `${response.user?._id}`);
-                navigation.replace('SignUpScreen');
-                // navigation.replace('OtpScreen', { mobileno: mobileNumber });
+            await Local.storeUserId('UserId', `${response.user?._id}`);
+            // navigation.reset('Home');
+            // const userExists = await getEexistuser();
+            // console.log(userExists, 'userdata')
+            const userExists = await Local.getEexistuser();
+            console.log(userExists, 'userdata he')
+            if (userExists == 'existuser') {
+                navigation.replace('home');
             } else {
-                console.log('Error during login:',);
-                // setError(response.data.message);
+                navigation.replace('SignUpScreen');
             }
+            // if (response.message = "OTP verified successfully") {
+
+            //     // await Local.storeLogin('token', response.token);
+
+
+
+
+
+            //     // navigation.replace('OtpScreen', { mobileno: mobileNumber });
+            // } else {
+            //     console.log('Error during login:',);
+            //     // setError(response.data.message);
+            // }
         } catch (error) {
+
+            const userExists = await Local.getEexistuser();
+            console.log(userExists, 'userdata')
+            // AsyncStorage.getItem('existuser', value => {
+            //     console.log(value, 'asyc storage')
+            //     if (value == 'existuser') {
+            //         navigation.replace('Home');
+            //     } else {
+            //         navigation.replace('SignUpScreen');
+            //     }
+            // });
+            if (userExists == true) {
+                navigation.reset('Home');
+            } else {
+                navigation.replace('SignUpScreen');
+            }
             // Alert(error)
             // console.error('Error during login:hwre', error?.message);
-            if (error.response && error.response.data && error.response.data.message) {
-                Alert.alert('Error', error.response.data.message);
-            } else {
-                Alert.alert('Error', 'An error occurred during login.');
-            }
+
 
         }
     };
@@ -92,13 +120,7 @@ const OtpScreen = props => {
     // };
     useEffect(() => {
         console.log(mobileno)
-        // AsyncStorage.getItem('isLogin', value => {
-        //     if (value != null || value != undefined) {
-        //         navigation.reset('Home');
-        //     } else {
-        //         changeIsLogin(false);
-        //     }
-        // });
+
     }, []);
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -115,57 +137,57 @@ const OtpScreen = props => {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <SafeAreaView style={styles.container}>
-            <View style={styles.image}>
+                <View style={styles.image}>
 
 
-                {/* <ImageBackground source={FunZone} resizeMode="cover" style={styles.image}> */}
-                <View style={{ width: width - 60, marginTop: 30, marginBottom: 40, }}>
-                    <Text style={styles.TileTxt}>{"Enter the code received "}</Text>
+                    {/* <ImageBackground source={FunZone} resizeMode="cover" style={styles.image}> */}
+                    <View style={{ width: width - 60, marginTop: 30, marginBottom: 40, }}>
+                        <Text style={styles.TileTxt}>{"Enter the code received "}</Text>
                         <Text style={styles.subTileTxt}>The code has been sent to  <Text style={{ color: '#A811DA' }}>+91 {mobileno}</Text></Text>
-                </View>
+                    </View>
 
-                <View style={{ flexDirection: 'row', width: '80%' }}>
+                    <View style={{ flexDirection: 'row', width: '80%' }}>
 
-                    <TextInputBox
+                        <TextInputBox
                             value={otp}
-                        isNumber={true}
-                        errorText={checkEmail}
-                        onChangeText={text => {
-                            changeotp(text);
-                            changecheckEmail('')
-                        }}
-                        placeholder={'otp'}
-                        width={width / 2}
-                        title={'Code'}
+                            isNumber={true}
+                            errorText={checkEmail}
+                            onChangeText={text => {
+                                changeotp(text);
+                                changecheckEmail('')
+                            }}
+                            placeholder={'otp'}
+                            width={width / 2}
+                            title={'Code'}
+                        />
+
+                    </View>
+                    <View style={{ width: '80%', marginTop: 60, marginBottom: 50 }}>
+                        <Image
+                            key={1}
+                            resizeMode="cover"
+                            style={{ width: 170, height: 200, marginTop: 6, marginBottom: 6 }}
+                            source={FunZone}
+                        />
+                    </View>
+
+                    <CommonButton
+                        onPress={() => isValidate()}
+                        // onPress={() => navigation.replace('Home')}
+                        color={['#BF5AE0', '#A811DA']}
+                        title={'Verify Now'}
+                        borderRadius={26}
+                        width={width / 1.2}
+                        texttitle={'white'}
                     />
+                    <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%', flexDirection: 'row', }}>
+                        <Text style={styles.subTxt}>Didn't get any code? <TouchableOpacity><Text style={styles.subtryTxt}>Try Again</Text></TouchableOpacity></Text>
 
+
+
+                    </View>
                 </View>
-                <View style={{ width: '80%', marginTop: 60, marginBottom: 50 }}>
-                    <Image
-                        key={1}
-                        resizeMode="cover"
-                        style={{ width: 170, height: 200, marginTop: 6, marginBottom: 6 }}
-                        source={FunZone}
-                    />
-                </View>
-
-                <CommonButton
-                    onPress={() => isValidate()}
-                    // onPress={() => navigation.replace('Home')}
-                    color={['#BF5AE0', '#A811DA']}
-                    title={'Verify Now'}
-                    borderRadius={26}
-                    width={width / 1.2}
-                    texttitle={'white'}
-                />
-                <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%', flexDirection: 'row', }}>
-                    <Text style={styles.subTxt}>Didn't get any code? <TouchableOpacity><Text style={styles.subtryTxt}>Try Again</Text></TouchableOpacity></Text>
-
-
-
-                </View>
-            </View>
-            {/* </ImageBackground> */}
+                {/* </ImageBackground> */}
             </SafeAreaView>
         </TouchableWithoutFeedback>
 

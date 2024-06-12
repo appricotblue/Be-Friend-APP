@@ -69,7 +69,7 @@ const LoginScreen = props => {
     if (mobileNumber === '') {
       changecheckEmail('Enter Mobile no');
     }
-    else if (mobileNumber.length != 10) {
+    else if (mobileNumber?.length != 10) {
       changecheckEmail('Enter valid Mobile no');
     }
     else if (selectedCountryId === '') {
@@ -90,8 +90,8 @@ const LoginScreen = props => {
 
 
       if (response.message = "OTP sent successfully") {
-
-  // await Local.storeLogin('token', response.token);
+        await Local.storEexistuser('existuser', response.isExistingUser == true ? 'existuser' : 'newuser');
+        // await Local.storEexistuser('existuser', response.isExistingUser == true ? 'existuser' : 'newuser');
   // await Local.storeUserId('UserId', `${response.user?.id}`);
 
         navigation.replace('OtpScreen', { mobileno: mobileNumber });
@@ -118,13 +118,13 @@ const LoginScreen = props => {
   };
 
   useEffect(() => {
-    AsyncStorage.getItem('isLogin', value => {
-      if (value != null || value != undefined) {
-        navigation.reset('Home');
-      } else {
-        changeIsLogin(false);
-      }
-    });
+    // AsyncStorage.getItem('isLogin', value => {
+    //   if (value != null || value != undefined) {
+    //     navigation.reset('Home');
+    //   } else {
+    //     changeIsLogin(false);
+    //   }
+    // });
   }, []);
 
   useEffect(() => {
