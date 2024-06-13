@@ -28,7 +28,7 @@ const RoomItemCard = ({data}) => {
             <Text style={styles.titleText}>{item.title}</Text>
             <Text style={styles.title}>{item.lng}</Text>
             <TouchableOpacity
-              onPress={() => navigation.navigate('groupCall')}
+              onPress={() => navigation.navigate('LoadingScreen')}
               style={styles.btnstyle}>
               <Text style={{color: 'black'}}>Join</Text>
               <Image

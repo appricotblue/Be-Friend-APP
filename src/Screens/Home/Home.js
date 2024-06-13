@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,9 +8,9 @@ import {
   FlatList,
   View,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
-import { useLanguage } from '../../LanguageContext';
+import {useLanguage} from '../../LanguageContext';
 import MainHeader from '../../components/MainHeader';
 import HomeBgPNG from '../../assets/png/HomeBgPNG.png';
 import smily from '../../assets/png/smily.png';
@@ -20,7 +20,7 @@ import AjayPNG from '../../assets/png/AjayPNG.png';
 import AnupamaPNG from '../../assets/png/AnupamaPNG.png';
 import PrivatePNG from '../../assets/png/PrivatePNG.png';
 import RandomSVG from '../../assets/svg/RandomSVG';
-import { height, width } from '../../Theme/Constants';
+import {height, width} from '../../Theme/Constants';
 import HorizontalFilter from '../../components/HorizontalFilter';
 import * as Animatable from 'react-native-animatable';
 import BottomPopupModal from '../../components/HomeBottomModal';
@@ -28,58 +28,60 @@ import EarnModal from '../../components/EarnModal';
 import BlockModal from '../../components/BlockModal';
 import IntroModal from '../../components/IntroModal';
 import EarnMoneyModal from '../../components/EarnMoneyModal';
-import { getusers, getallcategories } from '../../api';
+import {getusers, getallcategories} from '../../api';
 import Local from '../../Storage/Local';
 import PhonePNG from '../../assets/png/PhonePNG.png';
 import VideoPNG from '../../assets/png/VideoPNG.png';
+import AgoraUIKit from 'agora-rn-uikit';
+import {requestUserPermission} from '../../PushNotifications';
 
 const Data = [
-  { id: 1, title: 'Romance' },
-  { id: 2, title: 'Broken' },
-  { id: 3, title: 'Friendship' },
-  { id: 4, title: 'Malayalam' },
-  { id: 5, title: 'Music' },
-  { id: 6, title: 'Drama' },
+  {id: 1, title: 'Romance'},
+  {id: 2, title: 'Broken'},
+  {id: 3, title: 'Friendship'},
+  {id: 4, title: 'Malayalam'},
+  {id: 5, title: 'Music'},
+  {id: 6, title: 'Drama'},
 ];
 
 const items = [
-  { id: 1, title: 'Romance', img: ShreyaPNG },
-  { id: 2, title: 'Broken', img: NandhuPNG },
-  { id: 3, title: 'Friendship', img: AjayPNG },
-  { id: 4, title: 'Malayalam', img: AnupamaPNG },
-  { id: 5, title: 'Music', img: ShreyaPNG },
-  { id: 6, title: 'Drama', img: NandhuPNG },
-  { id: 7, title: 'Romance', img: AnupamaPNG },
-  { id: 8, title: 'Broken', img: ShreyaPNG },
-  { id: 9, title: 'Friendship', img: NandhuPNG },
-  { id: 10, title: 'Malayalam', img: AjayPNG },
-  { id: 11, title: 'Music', img: AnupamaPNG },
-  { id: 12, title: 'Drama', img: ShreyaPNG },
-  { id: 13, title: 'Music', img: ShreyaPNG },
-  { id: 14, title: 'Drama', img: NandhuPNG },
-  { id: 15, title: 'Romance', img: AnupamaPNG },
-  { id: 16, title: 'Broken', img: ShreyaPNG },
-  { id: 17, title: 'Friendship', img: NandhuPNG },
-  { id: 18, title: 'Malayalam', img: AjayPNG },
-  { id: 19, title: 'Music', img: AnupamaPNG },
-  { id: 20, title: 'Drama', img: ShreyaPNG },
-  { id: 21, title: 'Music', img: ShreyaPNG },
-  { id: 22, title: 'Drama', img: NandhuPNG },
-  { id: 23, title: 'Romance', img: AnupamaPNG },
-  { id: 24, title: 'Broken', img: ShreyaPNG },
-  { id: 25, title: 'Friendship', img: NandhuPNG },
-  { id: 26, title: 'Malayalam', img: AjayPNG },
-  { id: 27, title: 'Music', img: AnupamaPNG },
-  { id: 28, title: 'Drama', img: ShreyaPNG },
-  { id: 29, title: 'Action', img: NandhuPNG },
-  { id: 30, title: 'Comedy', img: ShreyaPNG },
-  { id: 31, title: 'Adventure', img: AnupamaPNG },
+  {id: 1, title: 'Romance', img: ShreyaPNG},
+  {id: 2, title: 'Broken', img: NandhuPNG},
+  {id: 3, title: 'Friendship', img: AjayPNG},
+  {id: 4, title: 'Malayalam', img: AnupamaPNG},
+  {id: 5, title: 'Music', img: ShreyaPNG},
+  {id: 6, title: 'Drama', img: NandhuPNG},
+  {id: 7, title: 'Romance', img: AnupamaPNG},
+  {id: 8, title: 'Broken', img: ShreyaPNG},
+  {id: 9, title: 'Friendship', img: NandhuPNG},
+  {id: 10, title: 'Malayalam', img: AjayPNG},
+  {id: 11, title: 'Music', img: AnupamaPNG},
+  {id: 12, title: 'Drama', img: ShreyaPNG},
+  {id: 13, title: 'Music', img: ShreyaPNG},
+  {id: 14, title: 'Drama', img: NandhuPNG},
+  {id: 15, title: 'Romance', img: AnupamaPNG},
+  {id: 16, title: 'Broken', img: ShreyaPNG},
+  {id: 17, title: 'Friendship', img: NandhuPNG},
+  {id: 18, title: 'Malayalam', img: AjayPNG},
+  {id: 19, title: 'Music', img: AnupamaPNG},
+  {id: 20, title: 'Drama', img: ShreyaPNG},
+  {id: 21, title: 'Music', img: ShreyaPNG},
+  {id: 22, title: 'Drama', img: NandhuPNG},
+  {id: 23, title: 'Romance', img: AnupamaPNG},
+  {id: 24, title: 'Broken', img: ShreyaPNG},
+  {id: 25, title: 'Friendship', img: NandhuPNG},
+  {id: 26, title: 'Malayalam', img: AjayPNG},
+  {id: 27, title: 'Music', img: AnupamaPNG},
+  {id: 28, title: 'Drama', img: ShreyaPNG},
+  {id: 29, title: 'Action', img: NandhuPNG},
+  {id: 30, title: 'Comedy', img: ShreyaPNG},
+  {id: 31, title: 'Adventure', img: AnupamaPNG},
 ];
 
 const numColumns = 3;
 
-const Home = ({ navigation: { navigate } }) => {
-  const { t } = useLanguage();
+const Home = ({navigation: {navigate}}) => {
+  const {t} = useLanguage();
   const flatListRef = useRef(null);
 
   const onProfilePress = () => {
@@ -92,55 +94,50 @@ const Home = ({ navigation: { navigate } }) => {
   const [isEarnModalVisible, setEarnIsModalVisible] = useState(false);
   const [isIntroModalVisible, setIsIntroModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(items.length - 1);
+  const [videoCall, setVideoCall] = useState(false);
 
   useEffect(() => {
     Getusers();
-    Getallcategories()
+    Getallcategories();
+    requestUserPermission();
   }, []);
 
   const Getallcategories = async () => {
     try {
       const response = await getallcategories();
-      console.log(response, 'cat api response')
-      setcatdata(response)
-      if (response.message = "OTP sent successfully") {
-
+      console.log(response, 'cat api response');
+      setcatdata(response);
+      if ((response.message = 'OTP sent successfully')) {
       } else {
-        console.log('Error during login:',);
+        console.log('Error during login:');
       }
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
-
 
   const Getusers = async () => {
     try {
       const response = await getusers();
       // const response = await login('userTwo', 'userTwo@123');
-      console.log(response[0].profile.avatar, 'users api response')
-      console.log(response, 'users api response')
-      setuserdata(response)
+      console.log(response[0].profile.avatar, 'users api response');
+      console.log(response, 'users api response');
+      setuserdata(response);
 
-      if (response.message = "OTP sent successfully") {
-
-
+      if ((response.message = 'OTP sent successfully')) {
       } else {
-        console.log('Error during login:',);
-
+        console.log('Error during login:');
       }
     } catch (error) {
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         Alert.alert('Error', error.response.data.message);
       } else {
         Alert.alert('Error', 'An error occurred during login.');
       }
-
     }
   };
-
-
-
 
   const initialScrollIndex = Math.min(
     Math.floor(currentIndex / numColumns),
@@ -153,36 +150,36 @@ const Home = ({ navigation: { navigate } }) => {
     setEarnIsModalVisible(!isEarnModalVisible);
   };
 
-  const renderItem = ({ item, index }) => (
+  const renderItem = ({item, index}) => (
     <Animatable.View
       animation="zoomIn"
       duration={1000}
       delay={300}
-      style={{ flex: 1, marginTop: index % 2 === 0 ? 0 : 58 }}>
+      style={{flex: 1, marginTop: index % 2 === 0 ? 0 : 58}}>
       <View style={styles.flowContainer}>
         <TouchableOpacity style={styles.FlatlistContainer}>
-          <View style={{ position: 'relative', alignItems: 'center' }}>
+          <View style={{position: 'relative', alignItems: 'center'}}>
             <Image
-              source={{ uri: item?.profile?.avatar ? item?.profile?.avatar : 'https://img.lovepik.com/element/40128/7461.png_1200.png' }}
-              style={{ height: 80, width: 80, borderRadius: 50 }}
+              source={{
+                uri: item?.profile?.avatar
+                  ? item?.profile?.avatar
+                  : 'https://img.lovepik.com/element/40128/7461.png_1200.png',
+              }}
+              style={{height: 80, width: 80, borderRadius: 50}}
             />
             <View style={[styles.icon, styles.callingIcon]}>
-              <Image
-                source={PhonePNG}
-                style={{ height: 20, width: 20 }}
-              />
+              <Image source={PhonePNG} style={{height: 20, width: 20}} />
             </View>
 
             <View style={[styles.icon, styles.videoIcon]}>
               <Image
                 source={VideoPNG} // replace with your video image source
-                style={{ height: 20, width: 20 }}
+                style={{height: 20, width: 20}}
               />
             </View>
-
           </View>
 
-          <Text style={{ color: 'white' }}>#{item.username}</Text>
+          <Text style={{color: 'white'}}>#{item.username}</Text>
         </TouchableOpacity>
       </View>
     </Animatable.View>
@@ -205,7 +202,15 @@ const Home = ({ navigation: { navigate } }) => {
     // </Animatable.View>
   );
 
-  return (
+  const connectionData = {
+    appId: '834d9260395243e982c0df386e8284d8',
+    channel: 'test',
+  };
+  const rtcCallbacks = {
+    EndCall: () => setVideoCall(false),
+  };
+
+  return videoCall === false ? (
     <SafeAreaView style={styles.container}>
       <ImageBackground source={HomeBgPNG} style={styles.bgStyle}>
         <MainHeader
@@ -216,7 +221,10 @@ const Home = ({ navigation: { navigate } }) => {
         <View>
           <Image source={PrivatePNG} style={styles.svgStle}></Image>
         </View>
-        <HorizontalFilter data={catdata} onPressItem={(item) => setcatId(item._id)} />
+        <HorizontalFilter
+          data={catdata}
+          onPressItem={item => setcatId(item._id)}
+        />
 
         <FlatList
           ref={flatListRef}
@@ -233,7 +241,12 @@ const Home = ({ navigation: { navigate } }) => {
           <RandomSVG marginHorizontal={5} />
           <Text style={styles.hostText}>{t('Random')}</Text>
         </TouchableOpacity>
-        <BottomPopupModal visible={isModalVisible} onClose={toggleModal} />
+        <BottomPopupModal
+          visible={isModalVisible}
+          onClose={toggleModal}
+          onVideoCallPress={() => setVideoCall(true)}
+          onAudioCallPress={() => navigate('Voicecall')}
+        />
         {/* <EarnModal visible={isEarnModalVisible} onClose={toggleEarnModal} /> */}
         {/* <EarnMoneyModal
           visible={isEarnModalVisible}
@@ -247,6 +260,8 @@ const Home = ({ navigation: { navigate } }) => {
         />
       </ImageBackground>
     </SafeAreaView>
+  ) : (
+    <AgoraUIKit connectionData={connectionData} rtcCallbacks={rtcCallbacks} />
   );
 };
 
@@ -304,26 +319,25 @@ const styles = StyleSheet.create({
   callingIcon: {
     left: -20, // Adjust the positioning as needed
     top: '50%',
-    transform: [{ translateY: -12 }], // Center vertically
+    transform: [{translateY: -12}], // Center vertically
     backgroundColor: '#02AAB0',
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     width: 30,
-    height: 30
+    height: 30,
   },
   videoIcon: {
     right: -20, // Adjust the positioning as needed
     top: '50%',
-    transform: [{ translateY: -12 }], // Center vertically
+    transform: [{translateY: -12}], // Center vertically
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#ED6D6D',
     width: 30,
-    height: 30
+    height: 30,
   },
-
 });
 
 export default Home;

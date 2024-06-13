@@ -5,7 +5,12 @@ import ModalCloseSVG from '../assets/svg/ModalCloseSVG';
 import {height, width} from '../Theme/Constants';
 import LoveSmallSVG from '../assets/svg/LoveSmallSVG';
 
-const HomeBottomModal = ({visible, onClose}) => {
+const HomeBottomModal = ({
+  visible,
+  onClose,
+  onVideoCallPress,
+  onAudioCallPress,
+}) => {
   const insets = useSafeAreaInsets();
 
   return (
@@ -27,7 +32,9 @@ const HomeBottomModal = ({visible, onClose}) => {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <TouchableOpacity style={styles.buttonStyle}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={onAudioCallPress}>
               <Text style={styles.callText}>Audio Call</Text>
               <View
                 style={{
@@ -38,7 +45,9 @@ const HomeBottomModal = ({visible, onClose}) => {
                 <Text style={styles.rateText}>1/min</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonStyle}>
+            <TouchableOpacity
+              style={styles.buttonStyle}
+              onPress={onVideoCallPress}>
               <Text style={styles.callText}>Video Call</Text>
               <View
                 style={{

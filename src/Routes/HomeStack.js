@@ -19,6 +19,7 @@ import KYCScreen from '../Screens/KYC/KYCScreen';
 import AccountScreen from '../Screens/Account/AccountScreen';
 import FriendRequestScreen from '../Screens/FriendRequest/FriendRequestScreen';
 import GroupCallScreen from '../Screens/GroupCall/GroupCallScreen';
+import VoiceCallSample from '../Screens/Home/VoiceCallSample';
 
 const Stack = createStackNavigator();
 if (!__DEV__) {
@@ -47,6 +48,7 @@ const HomeStack = () => {
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="LoadingScreen" component={LoadingScreen} />
       <Stack.Screen name="groupCall" component={GroupCallScreen} />
+      <Stack.Screen name="Voicecall" component={VoiceCallSample} />
     </Stack.Navigator>
   );
 };
