@@ -83,25 +83,14 @@ const LoginScreen = props => {
   const handleLogin = async () => {
     try {
       const response = await login(mobileNumber);
-      // const response = await login('userTwo', 'userTwo@123');
       console.log(response, 'login api response')
-      // await Local.storeLogin('token', response.token);
-      // await Local.storeUserId('UserId', `${response.user?.id}`);
-
-
       if (response.message = "OTP sent successfully") {
         await Local.storEexistuser('existuser', response.isExistingUser == true ? 'existuser' : 'newuser');
-        // await Local.storEexistuser('existuser', response.isExistingUser == true ? 'existuser' : 'newuser');
-  // await Local.storeUserId('UserId', `${response.user?.id}`);
-
         navigation.replace('OtpScreen', { mobileno: mobileNumber });
       } else {
         console.log('Error during login:',);
-        // setError(response.data.message);
       }
     } catch (error) {
-      // Alert(error)
-      // console.error('Error during login:hwre', error?.message);
       if (error.response && error.response.data && error.response.data.message) {
         Alert.alert('Error', error.response.data.message);
       } else {
@@ -178,7 +167,6 @@ const LoginScreen = props => {
             width={width / 1.2}
             texttitle={'white'}
           />
-
           <View style={{ justifyContent: 'flex-end', alignItems: 'baseline', height: 40, width: '100%' }}>
             <Text style={styles.subTxt}>{"No worries!,We won't show"}</Text>
             <Text style={styles.subTxt}>{"  your number on profile"}</Text>
