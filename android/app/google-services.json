@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "620978721612",
+    "project_id": "befriendapp-e9bc0",
+    "storage_bucket": "befriendapp-e9bc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:620978721612:android:65fcf8c452fde0961fb5e9",
+        "android_client_info": {
+          "package_name": "com.befriend.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCR0EZ-uYCKbpyiRqeJ7MZeQrU4K-VlpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

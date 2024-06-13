@@ -1,11 +1,12 @@
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import React, {useState} from 'react';
 import {height, width} from '../Theme/Constants';
 import * as Animatable from 'react-native-animatable';
 
-const HorizontalFilter = ({data}) => {
+const HorizontalFilter = ({ data, onPressItem }) => {
   const [selected, setSelected] = useState('');
   console.log(selected);
+
   const renderItem = ({item, index}) => {
     return (
       <Animatable.View animation="flipInY" duration={1000} delay={200}>
@@ -13,11 +14,16 @@ const HorizontalFilter = ({data}) => {
           <TouchableOpacity
             style={[
               Styles.container,
-              {backgroundColor: selected == index ? '#A662B6' : 'black'},
+              { backgroundColor: selected == item._id ? '#A662B6' : item?.image ? 'rgba(0, 0, 5, 0.5)' : 'black' },
             ]}
-            onPress={() => setSelected(index)}>
-            <Text style={{color: selected == index ? 'black' : '#A662B6'}}>
-              {item.title}
+            onPress={() => { onPressItem(item), setSelected(item._id) }}>
+
+            {item?.image && (
+              <Image source={item?.image} resizeMode='contain' style={Styles.rankimage} />
+            )}
+
+            <Text style={{ color: selected == item._id ? 'black' : '#A662B6' }}>
+              {item.name}
             </Text>
           </TouchableOpacity>
         </View>
@@ -32,6 +38,7 @@ const HorizontalFilter = ({data}) => {
         renderItem={(item, index) => renderItem(item, index)}
         keyExtractor={item => item.id}
         horizontal={true}
+        showsHorizontalScrollIndicator={false}
       />
     </View>
   );
@@ -46,6 +53,17 @@ const Styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 7,
     marginHorizontal: 5,
+    flexDirection: 'row'
+  },
+  rankimage: {
+    height: 19,
+    width: 20,
+    // marginBottom: 10, 
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10
+
   },
 });
 
